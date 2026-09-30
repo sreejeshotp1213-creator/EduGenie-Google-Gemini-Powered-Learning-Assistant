@@ -1,1 +1,988 @@
 Project-Development
+# EduGenie – Google Gemini Powered Learning Assistant
+
+## Project Development
+
+The **Project Development phase** converts the approved requirements, design, and project plan into a working **EduGenie AI-powered learning assistant**. The development focuses on implementing the frontend, backend, database, authentication, Google Gemini integration, learning modules, and testing.
+
+---
+
+# 1. Development Objective
+
+The main objective is to develop a functional learning platform that enables students to:
+
+* Ask academic questions.
+* Receive AI-generated explanations.
+* Generate summaries and study notes.
+* Generate and attempt quizzes.
+* Receive quiz feedback.
+* Create study plans.
+* Track learning activity.
+* Receive personalized revision recommendations.
+
+The central learning cycle is:
+
+> **Ask → Learn → Practice → Evaluate → Improve**
+
+---
+
+# 2. Development Architecture
+
+The application follows a three-layer architecture:
+
+```text
+                    EDU GENIE
+                        │
+                        ▼
+              ┌──────────────────┐
+              │    FRONTEND      │
+              │                  │
+              │ Dashboard        │
+              │ AI Tutor         │
+              │ Quiz             │
+              │ Study Planner    │
+              │ Progress         │
+              └────────┬─────────┘
+                       │
+                    HTTPS/API
+                       │
+                       ▼
+              ┌──────────────────┐
+              │     BACKEND      │
+              │                  │
+              │ Authentication   │
+              │ Business Logic   │
+              │ Prompt Engine    │
+              │ REST APIs        │
+              └───────┬───┬──────┘
+                      │   │
+                ┌─────┘   └──────┐
+                ▼                 ▼
+        ┌──────────────┐  ┌──────────────┐
+        │   DATABASE   │  │ GOOGLE       │
+        │              │  │ GEMINI API   │
+        │ Users        │  │              │
+        │ Chats        │  │ AI Tutor     │
+        │ Quizzes      │  │ Summaries    │
+        │ Results      │  │ Quiz Gen.    │
+        │ Study Plans  │  │ Planning     │
+        └──────────────┘  └──────────────┘
+```
+
+---
+
+# 3. Technology Selection
+
+A practical implementation can use the following stack:
+
+| Component       | Technology                                        |
+| --------------- | ------------------------------------------------- |
+| Frontend        | React.js                                          |
+| Styling         | CSS / Bootstrap / Tailwind CSS                    |
+| Backend         | Node.js + Express                                 |
+| AI              | Google Gemini API                                 |
+| Database        | Firebase Firestore                                |
+| Authentication  | Firebase Authentication                           |
+| API             | REST                                              |
+| Version Control | Git + GitHub                                      |
+| Deployment      | Firebase / Google Cloud / suitable cloud platform |
+
+A Python backend using FastAPI can also be used if the development team prefers Python.
+
+---
+
+# 4. Development Environment Setup
+
+Before implementation, the development environment is configured.
+
+### Required tools
+
+* Code editor such as VS Code
+* Node.js
+* npm
+* Git
+* Browser
+* Firebase project
+* Google AI/Gemini API access
+* API testing tool such as Postman
+
+### Project structure
+
+A possible project structure is:
+
+```text
+edugenie/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── hooks/
+│   │   └── styles/
+│   └── package.json
+│
+├── backend/
+│   ├── controllers/
+│   ├── routes/
+│   ├── services/
+│   ├── middleware/
+│   ├── models/
+│   ├── utils/
+│   └── server.js
+│
+├── database/
+│
+├── tests/
+│
+├── .env
+├── .gitignore
+└── README.md
+```
+
+---
+
+# 5. Frontend Development
+
+The frontend provides the interface through which students interact with EduGenie.
+
+## Main pages
+
+### 1. Login
+
+### 2. Registration
+
+### 3. Dashboard
+
+### 4. AI Tutor
+
+### 5. Study Materials
+
+### 6. Quiz
+
+### 7. Quiz Results
+
+### 8. Study Planner
+
+### 9. Progress
+
+### 10. Profile
+
+---
+
+# 6. Dashboard Development
+
+The dashboard acts as the central navigation point.
+
+Example:
+
+```text
+------------------------------------------------
+                 EDU GENIE
+------------------------------------------------
+
+Welcome, Student!
+
+[ AI Tutor ]     [ Generate Quiz ]
+
+[ Study Plan ]   [ My Progress ]
+
+------------------------------------------------
+Recent Activity
+
+✓ Binary Search Quiz
+✓ Recursion Explanation
+✓ Data Structures Study Plan
+
+Recommended Revision
+→ Recursion
+→ Tree Traversal
+------------------------------------------------
+```
+
+The dashboard should provide quick access to frequently used learning features.
+
+---
+
+# 7. Authentication Development
+
+Authentication protects user-specific information.
+
+### Registration flow
+
+```text
+User
+ ↓
+Registration Form
+ ↓
+Input Validation
+ ↓
+Authentication Service
+ ↓
+Create Account
+ ↓
+Create Student Profile
+ ↓
+Dashboard
+```
+
+### Login flow
+
+```text
+Email + Password
+       ↓
+Authentication
+       ↓
+Session / Token
+       ↓
+Dashboard
+```
+
+The system should never store passwords as plain text.
+
+---
+
+# 8. Database Development
+
+The database stores persistent application information.
+
+### Main collections/tables
+
+```text
+Users
+StudentProfiles
+Conversations
+Messages
+Quizzes
+QuizResults
+StudyPlans
+LearningHistory
+```
+
+### Example
+
+```text
+Users
+ └── userId
+      ├── name
+      ├── email
+      └── createdAt
+
+StudentProfiles
+ └── userId
+      ├── educationLevel
+      ├── preferredLanguage
+      └── learningGoals
+```
+
+---
+
+# 9. Backend Development
+
+The backend acts as the central controller.
+
+Its responsibilities include:
+
+* Authentication
+* Request validation
+* Database operations
+* Gemini API communication
+* Prompt construction
+* Quiz processing
+* Study-plan management
+* Progress calculations
+* Error handling
+
+### Request flow
+
+```text
+Frontend
+   ↓
+REST API
+   ↓
+Controller
+   ↓
+Business Logic
+   ↓
+Database / Gemini
+   ↓
+Response
+   ↓
+Frontend
+```
+
+---
+
+# 10. Gemini API Integration
+
+Gemini is the core AI component.
+
+The application should communicate with Gemini through the backend.
+
+```text
+Student
+   ↓
+EduGenie UI
+   ↓
+Backend
+   ↓
+Prompt Builder
+   ↓
+Gemini API
+   ↓
+AI Response
+   ↓
+Backend
+   ↓
+EduGenie UI
+```
+
+The Gemini API key should be stored securely on the server side, such as in environment variables or an appropriate secrets-management mechanism.
+
+---
+
+# 11. AI Tutor Development
+
+The AI Tutor is the primary feature.
+
+### Input
+
+```text
+Question
+Subject
+Learning Level
+Preferred Language
+Conversation Context
+```
+
+### Processing
+
+```text
+Input
+ ↓
+Validation
+ ↓
+Context Retrieval
+ ↓
+Prompt Construction
+ ↓
+Gemini
+ ↓
+Response Processing
+```
+
+### Output
+
+The response can contain:
+
+* Definition
+* Explanation
+* Example
+* Analogy
+* Steps
+* Practice question
+
+---
+
+# 12. Prompt Design
+
+EduGenie should use structured educational prompts.
+
+### Example conceptual prompt
+
+```text
+You are EduGenie, an AI learning assistant.
+
+Student level: Beginner
+Subject: Computer Science
+Topic: Binary Search
+
+Task:
+Explain binary search to the student.
+
+Requirements:
+1. Start with a simple definition.
+2. Give an intuitive example.
+3. Explain the process step by step.
+4. Mention the important concept involved.
+5. Provide one practice question.
+6. Use clear educational language.
+```
+
+The application can dynamically replace the student level, subject, topic, language, and task.
+
+---
+
+# 13. Conversation Context
+
+EduGenie should support follow-up questions.
+
+### Example
+
+**Student:**
+
+> Explain inheritance.
+
+**EduGenie:**
+
+> Inheritance is an object-oriented programming concept...
+
+**Student:**
+
+> Give me an example.
+
+The backend should preserve relevant conversation context so Gemini understands that "example" refers to inheritance.
+
+---
+
+# 14. Adaptive Explanation
+
+The application can provide three explanation levels.
+
+### Beginner
+
+Simple language and everyday examples.
+
+### Intermediate
+
+Technical terminology and practical examples.
+
+### Advanced
+
+Detailed technical explanations and, where appropriate, mathematical or implementation details.
+
+```text
+                 Topic
+                   │
+        ┌──────────┼──────────┐
+        ▼          ▼          ▼
+    Beginner   Intermediate  Advanced
+        │          │          │
+        └──────────┼──────────┘
+                   ▼
+                Gemini
+```
+
+---
+
+# 15. Study Material Module
+
+The module allows students to convert learning content into useful study resources.
+
+### Functions
+
+* Summarize content
+* Generate notes
+* Extract key points
+* Generate questions
+* Generate revision material
+
+### Flow
+
+```text
+Study Material
+      ↓
+Content Processing
+      ↓
+Prompt Construction
+      ↓
+Gemini
+      ↓
+Summary / Notes / Questions
+```
+
+For document-based features, the implementation should use an appropriate document-processing and Gemini-supported workflow rather than assuming every file format can be passed directly to the model.
+
+---
+
+# 16. Quiz Generator Development
+
+The Quiz Generator accepts:
+
+* Subject
+* Topic
+* Difficulty
+* Number of questions
+* Question type
+
+### Example request
+
+```text
+Subject: Data Structures
+Topic: Linked Lists
+Difficulty: Intermediate
+Questions: 10
+Type: MCQ
+```
+
+### Processing
+
+```text
+Quiz Parameters
+      ↓
+Prompt Builder
+      ↓
+Gemini
+      ↓
+Structured Quiz Response
+      ↓
+Quiz UI
+```
+
+Where possible, structured output should be used so generated questions can be reliably parsed by the application.
+
+---
+
+# 17. Quiz Evaluation
+
+For objective questions:
+
+```text
+Student Answers
+      ↓
+Answer Key
+      ↓
+Evaluation
+      ↓
+Score
+      ↓
+Feedback
+      ↓
+Database
+```
+
+Example:
+
+```text
+-------------------------------
+QUIZ RESULT
+-------------------------------
+
+Score: 8 / 10
+
+Correct: 8
+Incorrect: 2
+
+Recommended Revision:
+• Tree traversal
+• Binary search trees
+-------------------------------
+```
+
+For open-ended answers, AI-generated evaluation should be presented as feedback rather than treated as infallible academic grading.
+
+---
+
+# 18. Study Planner Development
+
+The student enters:
+
+* Subject
+* Topics
+* Exam date
+* Available study hours
+* Current preparation level
+
+The system generates a schedule.
+
+### Example
+
+```text
+Input
+ │
+ ├── Subject
+ ├── Topics
+ ├── Exam Date
+ └── Study Hours
+       │
+       ▼
+ Planning Service
+       │
+       ▼
+ Gemini-assisted planning
+       │
+       ▼
+ Study Schedule
+       │
+       ▼
+ Database
+```
+
+---
+
+# 19. Progress Tracking
+
+The system records relevant learning activity.
+
+### Data collected
+
+* Quiz attempts
+* Scores
+* Topics studied
+* Completed study activities
+* Study-plan progress
+
+### Dashboard
+
+```text
+---------------------------------------
+           LEARNING PROGRESS
+---------------------------------------
+
+Topics Studied          12
+Quizzes Completed        8
+Average Quiz Score      78%
+
+Recent Activity
+✓ Arrays
+✓ Linked Lists
+✓ Stacks
+
+Revision Suggestions
+→ Recursion
+→ Tree Traversal
+---------------------------------------
+```
+
+---
+
+# 20. Recommendation Development
+
+Recommendations can be generated from learning activity.
+
+### Example
+
+```text
+Quiz Results
+     +
+Topics Studied
+     +
+Study History
+     ↓
+Recommendation Logic
+     ↓
+Revision Suggestions
+```
+
+Example:
+
+> "You may want to practice tree traversal before continuing to advanced tree algorithms."
+
+Recommendations should remain transparent and should not be presented as definitive assessments of the learner.
+
+---
+
+# 21. API Development
+
+A REST API structure can be implemented as follows.
+
+### Authentication
+
+```text
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/logout
+```
+
+### AI
+
+```text
+POST /api/ai/chat
+POST /api/ai/explain
+POST /api/ai/summarize
+```
+
+### Quiz
+
+```text
+POST /api/quiz/generate
+POST /api/quiz/submit
+GET  /api/quiz/history
+```
+
+### Study Planner
+
+```text
+POST /api/study-plan/generate
+GET  /api/study-plan
+PUT  /api/study-plan/:id
+```
+
+### Progress
+
+```text
+GET /api/progress
+GET /api/recommendations
+```
+
+---
+
+# 22. Security Implementation
+
+Security must be implemented throughout development.
+
+### Authentication
+
+* Secure authentication provider.
+* Password hashing where custom authentication is used.
+* Session/token protection.
+
+### API
+
+* Keep Gemini credentials server-side.
+* Validate incoming requests.
+* Apply rate limiting where appropriate.
+* Restrict sensitive endpoints.
+
+### Database
+
+Users should only be able to access their own:
+
+* Conversations
+* Quiz results
+* Study plans
+* Profile information
+
+### Privacy
+
+Only collect information necessary for the learning experience.
+
+---
+
+# 23. Error Handling
+
+The application should handle:
+
+### Invalid input
+
+```text
+Please enter a valid question.
+```
+
+### Gemini service failure
+
+```text
+EduGenie could not reach the AI service.
+Please try again.
+```
+
+### Network failure
+
+```text
+Connection problem detected.
+Please check your internet connection.
+```
+
+### Invalid generated data
+
+The backend should validate structured Gemini output before displaying or storing it.
+
+---
+
+# 24. Testing During Development
+
+Testing should occur continuously rather than only after development.
+
+## Unit Testing
+
+Test:
+
+* Authentication functions
+* Quiz scoring
+* Prompt construction
+* Data validation
+* Recommendation logic
+
+## Integration Testing
+
+Test:
+
+```text
+Frontend → Backend → Gemini
+Frontend → Backend → Database
+```
+
+## UI Testing
+
+Test:
+
+* Forms
+* Navigation
+* Buttons
+* Chat
+* Quiz
+* Responsive design
+
+## AI Testing
+
+Test:
+
+* Different subjects
+* Different difficulty levels
+* Different question types
+* Follow-up questions
+* Ambiguous questions
+* Incorrect assumptions
+* Unsafe or inappropriate prompts
+* API failures
+
+---
+
+# 25. Development Milestones
+
+| Milestone | Output                        |
+| --------- | ----------------------------- |
+| M1        | Development environment ready |
+| M2        | Authentication complete       |
+| M3        | Database connected            |
+| M4        | Backend APIs complete         |
+| M5        | Gemini integration complete   |
+| M6        | AI Tutor complete             |
+| M7        | Quiz module complete          |
+| M8        | Study Planner complete        |
+| M9        | Progress dashboard complete   |
+| M10       | Integrated MVP                |
+| M11       | Testing complete              |
+| M12       | Deployment complete           |
+
+---
+
+# 26. Development Timeline
+
+```text
+Week 1   ████ Project setup + requirements
+Week 2   ████ Design + database
+Week 3   ████ Authentication + backend
+Week 4   ████ Gemini integration
+Week 5   ████ AI Tutor
+Week 6   ████ Frontend dashboard
+Week 7   ████ Quiz module
+Week 8   ████ Study Planner
+Week 9   ████ Progress module
+Week 10  ████ Integration
+Week 11  ████ Testing + debugging
+Week 12  ████ Deployment + documentation
+```
+
+---
+
+# 27. Git Development Strategy
+
+A Git repository can be organized using branches:
+
+```text
+main
+ │
+ ├── develop
+ │     ├── feature/authentication
+ │     ├── feature/ai-tutor
+ │     ├── feature/quiz
+ │     ├── feature/study-planner
+ │     └── feature/progress
+```
+
+Each feature should be developed and tested before being merged into the main development branch.
+
+---
+
+# 28. Development Workflow
+
+The team can follow:
+
+```text
+Requirement
+     ↓
+Design
+     ↓
+Create Task
+     ↓
+Implement
+     ↓
+Unit Test
+     ↓
+Code Review
+     ↓
+Integration
+     ↓
+System Test
+     ↓
+Deploy
+```
+
+---
+
+# 29. Complete EduGenie Development Flow
+
+```text
+                   STUDENT
+                      │
+                      ▼
+              ┌───────────────┐
+              │ EduGenie UI   │
+              └───────┬───────┘
+                      │
+                      ▼
+              ┌───────────────┐
+              │ Backend API   │
+              └───────┬───────┘
+                      │
+            ┌─────────┼─────────┐
+            │         │         │
+            ▼         ▼         ▼
+       Database    Gemini    Auth Service
+            │         │
+            │         ▼
+            │    AI Processing
+            │         │
+            └────┬────┘
+                 ▼
+         Personalized Result
+                 │
+                 ▼
+          Student Dashboard
+```
+
+---
+
+# 30. Final Development Deliverable
+
+At the end of development, the project should provide a working **EduGenie MVP** containing:
+
+### Student features
+
+* Registration/login
+* Student profile
+* AI Tutor
+* Concept explanations
+* Conversation history
+* Study-material summarization
+* Quiz generation
+* Quiz evaluation
+* Study-plan generation
+* Progress tracking
+* Basic recommendations
+
+### Technical features
+
+* Secure backend
+* Database integration
+* Gemini API integration
+* REST APIs
+* Error handling
+* Input validation
+* Authentication and authorization
+* Responsive UI
+* Basic testing
+* Deployment configuration
+
+---
+
+# 31. Development Conclusion
+
+The **EduGenie development phase** transforms the project design into a functional AI learning platform. The implementation should begin with the core infrastructure—authentication, database, backend, and frontend—followed by secure Google Gemini integration. The AI Tutor should be developed first because it forms the foundation for explanations, summarization, quiz generation, and study assistance.
+
+The completed MVP should demonstrate the complete educational workflow:
+
+> **Student Question → Gemini-Powered Explanation → Practice Quiz → Performance Evaluation → Personalized Revision**
+
+This establishes the technical foundation for later enhancements such as **voice learning, image-based learning, multilingual interaction, advanced adaptive learning, gamification, and teacher support**.
