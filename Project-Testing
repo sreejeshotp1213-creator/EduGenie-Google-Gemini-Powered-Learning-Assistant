@@ -1,1 +1,827 @@
 Project-Testing
+# EduGenie – Google Gemini Powered Learning Assistant
+
+## Project Testing
+
+The **Project Testing phase** verifies that EduGenie works correctly, securely, reliably, and provides useful AI-assisted learning experiences. Since EduGenie integrates Google Gemini, testing must cover both **traditional software functionality** and **AI-specific behavior**.
+
+---
+
+# 1. Testing Objectives
+
+The main objectives of testing EduGenie are to:
+
+1. Verify that all functional requirements are implemented correctly.
+2. Ensure users can register and log in securely.
+3. Verify communication between frontend, backend, database, and Gemini.
+4. Ensure AI responses are relevant and educationally appropriate.
+5. Verify quiz generation and evaluation.
+6. Verify study-plan generation.
+7. Verify progress tracking.
+8. Identify and correct defects.
+9. Test system performance and reliability.
+10. Verify protection of user information.
+11. Ensure graceful handling of Gemini/API failures.
+12. Confirm that the final application satisfies its acceptance criteria.
+
+---
+
+# 2. Testing Strategy
+
+EduGenie testing can be organized into:
+
+```text
+                    PROJECT TESTING
+                          │
+       ┌──────────────────┼──────────────────┐
+       │                  │                  │
+ Functional Testing   AI Testing       Non-Functional
+       │                  │                  │
+   ┌───┼───┐          ┌───┼────┐        ┌───┼────┐
+   │   │   │          │   │    │        │   │    │
+ Unit Integration UI  Accuracy Relevance Security Performance
+```
+
+---
+
+# 3. Testing Levels
+
+## 3.1 Unit Testing
+
+Individual functions or components are tested independently.
+
+### Examples
+
+* Login validation
+* Registration validation
+* Quiz score calculation
+* Prompt construction
+* Study-plan date calculation
+* Progress calculation
+
+### Objective
+
+Verify that individual components behave correctly before integration.
+
+---
+
+# 4. Integration Testing
+
+Integration testing verifies communication between modules.
+
+### Major integrations
+
+```text
+Frontend
+   ↓
+Backend
+   ↓
+Database
+```
+
+and
+
+```text
+Frontend
+   ↓
+Backend
+   ↓
+Gemini API
+```
+
+### Examples
+
+* Login → database
+* AI Tutor → Gemini
+* Quiz → Gemini → database
+* Study Planner → Gemini → database
+* Quiz result → progress dashboard
+
+---
+
+# 5. System Testing
+
+System testing evaluates the complete EduGenie application as one system.
+
+Example end-to-end scenario:
+
+```text
+Register
+   ↓
+Login
+   ↓
+Open AI Tutor
+   ↓
+Ask Question
+   ↓
+Receive Gemini Response
+   ↓
+Generate Quiz
+   ↓
+Attempt Quiz
+   ↓
+View Score
+   ↓
+View Progress
+   ↓
+Receive Recommendation
+```
+
+The entire workflow should operate correctly.
+
+---
+
+# 6. User Acceptance Testing
+
+User Acceptance Testing (UAT) verifies whether the system is suitable for its intended users.
+
+### Participants
+
+Potentially:
+
+* Students
+* Teachers
+* Project team members
+
+### Example tasks
+
+A student should be able to:
+
+1. Register.
+2. Ask a question.
+3. Understand the AI explanation.
+4. Generate a quiz.
+5. Complete the quiz.
+6. View the result.
+7. Generate a study plan.
+8. Check progress.
+
+---
+
+# 7. Functional Test Cases
+
+## 7.1 Registration Testing
+
+| ID     | Test Case                    | Expected Result       |
+| ------ | ---------------------------- | --------------------- |
+| TC-001 | Register with valid details  | Account created       |
+| TC-002 | Register with existing email | Appropriate error     |
+| TC-003 | Empty name                   | Validation message    |
+| TC-004 | Invalid email                | Validation message    |
+| TC-005 | Weak/invalid password        | Validation message    |
+| TC-006 | Password mismatch            | Registration rejected |
+
+---
+
+# 8. Login Testing
+
+| ID     | Test Case                          | Expected Result          |
+| ------ | ---------------------------------- | ------------------------ |
+| TC-007 | Valid credentials                  | User logged in           |
+| TC-008 | Wrong password                     | Error displayed          |
+| TC-009 | Unknown email                      | Error displayed          |
+| TC-010 | Empty fields                       | Validation message       |
+| TC-011 | Logout                             | Session terminated       |
+| TC-012 | Access protected page after logout | Access denied/redirected |
+
+---
+
+# 9. AI Tutor Testing
+
+| ID     | Test Case                   | Expected Result            |
+| ------ | --------------------------- | -------------------------- |
+| TC-013 | Ask valid academic question | Relevant response          |
+| TC-014 | Submit empty question       | Validation message         |
+| TC-015 | Ask follow-up question      | Context maintained         |
+| TC-016 | Select beginner level       | Simplified explanation     |
+| TC-017 | Select advanced level       | More technical explanation |
+| TC-018 | Request example             | Example generated          |
+| TC-019 | Request summary             | Concise summary            |
+| TC-020 | Gemini unavailable          | Friendly error message     |
+
+---
+
+# 10. Example AI Test
+
+### Input
+
+> "Explain binary search to a beginner."
+
+### Expected behavior
+
+The response should:
+
+* Explain the concept clearly.
+* Use beginner-friendly language.
+* Describe the basic process.
+* Provide an example.
+* Avoid unnecessary complexity.
+
+### Evaluation
+
+| Criterion             | Expected   |
+| --------------------- | ---------- |
+| Relevance             | High       |
+| Clarity               | High       |
+| Level appropriateness | Beginner   |
+| Completeness          | Acceptable |
+| Educational value     | High       |
+
+---
+
+# 11. Quiz Generation Testing
+
+| ID     | Test Case                  | Expected Result             |
+| ------ | -------------------------- | --------------------------- |
+| TC-021 | Generate 5 MCQs            | 5 questions generated       |
+| TC-022 | Generate 10 MCQs           | 10 questions generated      |
+| TC-023 | Select beginner difficulty | Appropriate difficulty      |
+| TC-024 | Select advanced difficulty | Appropriate difficulty      |
+| TC-025 | Select subject/topic       | Questions relevant to topic |
+| TC-026 | Invalid quiz parameters    | Validation message          |
+| TC-027 | Gemini failure             | Appropriate error           |
+
+---
+
+# 12. Quiz Evaluation Testing
+
+| ID     | Test Case                | Expected Result      |
+| ------ | ------------------------ | -------------------- |
+| TC-028 | All answers correct      | Maximum score        |
+| TC-029 | All answers incorrect    | Minimum score        |
+| TC-030 | Partially correct        | Correct score        |
+| TC-031 | Submit without answering | Appropriate handling |
+| TC-032 | Submit quiz twice        | Correct behavior     |
+| TC-033 | View result              | Result displayed     |
+| TC-034 | Result saved             | Database updated     |
+
+---
+
+# 13. Study Planner Testing
+
+| ID     | Test Case               | Expected Result         |
+| ------ | ----------------------- | ----------------------- |
+| TC-035 | Valid study information | Study plan generated    |
+| TC-036 | Invalid exam date       | Validation message      |
+| TC-037 | Multiple subjects       | Plan includes subjects  |
+| TC-038 | Limited study hours     | Plan adapts accordingly |
+| TC-039 | View generated plan     | Plan displayed          |
+| TC-040 | Save plan               | Plan stored             |
+| TC-041 | Retrieve plan           | Correct plan displayed  |
+
+---
+
+# 14. Progress Tracking Testing
+
+| ID     | Test Case               | Expected Result                |
+| ------ | ----------------------- | ------------------------------ |
+| TC-042 | Complete quiz           | Activity recorded              |
+| TC-043 | View quiz history       | Previous quizzes displayed     |
+| TC-044 | Calculate average score | Correct value                  |
+| TC-045 | Complete study activity | Progress updated               |
+| TC-046 | View recommendations    | Relevant suggestions displayed |
+
+---
+
+# 15. Database Testing
+
+Database testing verifies:
+
+* Data insertion
+* Data retrieval
+* Data updates
+* Data deletion where applicable
+* Relationships
+* Data consistency
+* User-level access control
+
+### Example
+
+After a student completes a quiz:
+
+```text id="t0n6pl"
+Quiz Submission
+      ↓
+Score Calculation
+      ↓
+Quiz Result
+      ↓
+Database
+      ↓
+Progress Dashboard
+```
+
+The same score should appear consistently in the stored result and dashboard.
+
+---
+
+# 16. Gemini Integration Testing
+
+This is especially important because Gemini is an external AI service.
+
+### Test areas
+
+1. API connectivity
+2. Authentication/API configuration
+3. Request formatting
+4. Prompt construction
+5. Response parsing
+6. Response validation
+7. Error handling
+8. Timeout handling
+9. Rate/usage-limit handling
+10. Unexpected responses
+
+### Example
+
+```text id="9xqg6k"
+EduGenie Request
+      ↓
+Gemini API
+      ↓
+Valid Response
+      ↓
+Response Validation
+      ↓
+EduGenie UI
+```
+
+If Gemini returns an unexpected or malformed response:
+
+```text id="v1xj42"
+Gemini Response
+      ↓
+Validation Failed
+      ↓
+Error Handler
+      ↓
+User-Friendly Message
+```
+
+---
+
+# 17. AI Response Testing
+
+Traditional software testing is not enough for generative AI.
+
+Responses should be evaluated for:
+
+### 1. Accuracy
+
+Does the response contain correct information?
+
+### 2. Relevance
+
+Does it actually answer the student's question?
+
+### 3. Clarity
+
+Can the target student understand it?
+
+### 4. Level appropriateness
+
+Does the response match the selected learning level?
+
+### 5. Consistency
+
+Do repeated requests produce generally useful results?
+
+### 6. Educational value
+
+Does the response support understanding rather than simply providing an answer?
+
+---
+
+# 18. AI Test Dataset
+
+A small evaluation dataset can be prepared.
+
+| Test   | Topic             | Level        | Expected Behavior      |
+| ------ | ----------------- | ------------ | ---------------------- |
+| AI-001 | Photosynthesis    | Beginner     | Simple explanation     |
+| AI-002 | Binary Search     | Intermediate | Technical explanation  |
+| AI-003 | Neural Networks   | Advanced     | Detailed explanation   |
+| AI-004 | Algebra           | Beginner     | Step-by-step solution  |
+| AI-005 | Operating Systems | Intermediate | Structured explanation |
+
+The outputs can then be manually reviewed against predefined criteria.
+
+---
+
+# 19. Prompt Testing
+
+Different prompt structures should be compared.
+
+### Test A
+
+Simple question:
+
+> Explain recursion.
+
+### Test B
+
+Structured prompt:
+
+> Explain recursion to a beginner using an analogy, example, and step-by-step explanation.
+
+The team can evaluate whether the structured prompt provides more consistent educational output.
+
+---
+
+# 20. Multilingual Testing
+
+If multilingual functionality is implemented, test:
+
+| Input                        | Expected                               |
+| ---------------------------- | -------------------------------------- |
+| Explain recursion in English | English response                       |
+| Explain recursion in Tamil   | Tamil response                         |
+| Mixed Tamil-English question | Appropriate response                   |
+| Technical terminology        | Important terms retained appropriately |
+
+---
+
+# 21. Document-Based Testing
+
+If document interaction is implemented:
+
+### Test cases
+
+* Upload valid document.
+* Ask a question answered by the document.
+* Ask a question unrelated to the document.
+* Upload unsupported format.
+* Upload empty/corrupt file.
+* Ask for a summary.
+* Generate quiz from document.
+
+### Expected behavior
+
+The assistant should distinguish between information available in the supplied material and information it generates from general knowledge, depending on the implementation.
+
+---
+
+# 22. UI Testing
+
+Every interface element should be tested.
+
+### Test:
+
+* Buttons
+* Forms
+* Menus
+* Navigation
+* Chat input
+* Quiz options
+* Submit buttons
+* Error messages
+* Loading states
+* Mobile layout
+* Desktop layout
+
+Example:
+
+```text id="4tvk4f"
+Click "Generate Quiz"
+       ↓
+Loading indicator
+       ↓
+Quiz generated
+       ↓
+Quiz displayed
+```
+
+---
+
+# 23. Performance Testing
+
+Performance testing evaluates how the system behaves under different loads.
+
+### Test scenarios
+
+* One user
+* Multiple simultaneous users
+* Multiple AI requests
+* Large conversation history
+* Multiple quiz requests
+* Large learning documents where supported
+
+### Metrics
+
+* Page load time
+* API response time
+* Gemini response latency
+* Database response time
+* Error rate
+* Concurrent-user capacity
+
+AI response time should be evaluated separately from application processing time because model/network latency can vary.
+
+---
+
+# 24. Security Testing
+
+Security testing should verify:
+
+### Authentication
+
+* Invalid login attempts
+* Session management
+* Logout
+* Password handling
+
+### Authorization
+
+A student must not be able to access another student's:
+
+* Chat history
+* Quiz results
+* Study plans
+* Profile
+
+### API security
+
+* Gemini credentials are not exposed in frontend code.
+* Unauthorized API calls are rejected.
+* Input is validated.
+* Appropriate rate controls are applied.
+
+---
+
+# 25. Privacy Testing
+
+Verify that:
+
+* Only required user information is collected.
+* Student data is not exposed to other users.
+* Sensitive information is not unnecessarily stored.
+* Uploaded learning materials are handled according to the application's stated policy.
+* Account deletion/data removal works where provided.
+
+---
+
+# 26. Usability Testing
+
+A small group of users can test EduGenie.
+
+### Ask users to perform:
+
+1. Register.
+2. Ask an AI question.
+3. Change explanation level.
+4. Generate a quiz.
+5. Complete the quiz.
+6. Check the result.
+7. Create a study plan.
+8. Find progress information.
+
+### Collect feedback on:
+
+* Ease of use
+* Navigation
+* Clarity
+* Response usefulness
+* Visual design
+* Learning experience
+
+---
+
+# 27. Compatibility Testing
+
+Test the application on:
+
+### Browsers
+
+* Google Chrome
+* Microsoft Edge
+* Firefox
+* Safari where relevant
+
+### Devices
+
+* Desktop
+* Laptop
+* Tablet
+* Smartphone
+
+### Screen sizes
+
+* Desktop
+* Tablet
+* Mobile
+
+---
+
+# 28. Regression Testing
+
+Whenever a feature is changed, previously working features should be tested again.
+
+Example:
+
+```text id="b8x1p4"
+Modify AI Tutor
+      ↓
+Run AI Tutor Tests
+      ↓
+Run Login Tests
+      ↓
+Run Quiz Tests
+      ↓
+Run Progress Tests
+      ↓
+Run Integration Tests
+```
+
+This ensures that a new feature does not break existing functionality.
+
+---
+
+# 29. Error and Recovery Testing
+
+Test failures such as:
+
+* Internet disconnection
+* Gemini unavailable
+* Database unavailable
+* Invalid API response
+* Session expiration
+* Invalid input
+* Request timeout
+
+### Expected behavior
+
+The application should show a useful message rather than crashing.
+
+Example:
+
+> **"We couldn't complete your request right now. Please try again."**
+
+---
+
+# 30. Test Execution Summary
+
+A final testing report can summarize the results.
+
+| Category       | Planned Tests | Passed | Failed | Status |
+| -------------- | ------------: | -----: | -----: | ------ |
+| Authentication |            12 |     12 |      0 | Pass   |
+| AI Tutor       |             8 |      8 |      0 | Pass   |
+| Quiz           |            14 |     14 |      0 | Pass   |
+| Study Planner  |             7 |      7 |      0 | Pass   |
+| Progress       |             5 |      5 |      0 | Pass   |
+| Database       |             8 |      8 |      0 | Pass   |
+| Security       |            10 |     10 |      0 | Pass   |
+| UI/UX          |            12 |     12 |      0 | Pass   |
+| AI Evaluation  |            15 |     14 |      1 | Review |
+
+**Note:** These numbers are an example format for the report. Replace them with the actual results from your testing.
+
+---
+
+# 31. Defect Management
+
+When a defect is discovered, record:
+
+| Field       | Description                    |
+| ----------- | ------------------------------ |
+| Defect ID   | Unique identifier              |
+| Module      | Affected component             |
+| Description | Problem                        |
+| Severity    | Low / Medium / High / Critical |
+| Steps       | How to reproduce               |
+| Expected    | Expected behavior              |
+| Actual      | Actual behavior                |
+| Status      | Open / Fixed / Retested        |
+
+### Example
+
+| Field    | Example                       |
+| -------- | ----------------------------- |
+| ID       | BUG-001                       |
+| Module   | Quiz                          |
+| Severity | Medium                        |
+| Problem  | Score not updated             |
+| Expected | Score stored after submission |
+| Actual   | Score displayed but not saved |
+| Status   | Fixed                         |
+
+---
+
+# 32. AI-Specific Defect Categories
+
+AI-related issues can be classified separately.
+
+### AID-001 – Incorrect information
+
+Gemini provides factually incorrect content.
+
+### AID-002 – Irrelevant response
+
+Response does not address the student's question.
+
+### AID-003 – Wrong difficulty
+
+Beginner request produces an overly technical answer.
+
+### AID-004 – Context loss
+
+Follow-up question is interpreted incorrectly.
+
+### AID-005 – Poor quiz quality
+
+Generated question does not match the selected topic.
+
+### AID-006 – Unsupported certainty
+
+The model presents uncertain information too confidently.
+
+These defects should be documented and used to improve prompts, validation, or application logic.
+
+---
+
+# 33. Acceptance Testing
+
+The final system should satisfy the following acceptance criteria:
+
+| Requirement    | Acceptance Condition                                                 |
+| -------------- | -------------------------------------------------------------------- |
+| Authentication | Users can register and log in                                        |
+| AI Tutor       | Academic questions receive relevant responses                        |
+| Explanation    | Different learning levels produce appropriately adapted explanations |
+| Quiz           | Requested quizzes are generated correctly                            |
+| Evaluation     | Objective quiz scores are calculated correctly                       |
+| Study Planner  | Valid inputs produce a usable study plan                             |
+| Progress       | Learning activity is recorded correctly                              |
+| Security       | Users cannot access other users' private data                        |
+| Reliability    | API failures are handled gracefully                                  |
+| UI             | Main workflows work across supported screen sizes                    |
+
+---
+
+# 34. Final Testing Workflow
+
+```text id="h3p8q1"
+              REQUIREMENTS
+                    ↓
+              TEST PLANNING
+                    ↓
+              TEST CASES
+                    ↓
+             UNIT TESTING
+                    ↓
+          INTEGRATION TESTING
+                    ↓
+            SYSTEM TESTING
+                    ↓
+             AI EVALUATION
+                    ↓
+           SECURITY TESTING
+                    ↓
+           PERFORMANCE TEST
+                    ↓
+          USER ACCEPTANCE TEST
+                    ↓
+             BUG FIXING
+                    ↓
+           REGRESSION TEST
+                    ↓
+          FINAL ACCEPTANCE
+                    ↓
+                DEPLOY
+```
+
+---
+
+# 35. Testing Deliverables
+
+At the completion of the testing phase, the project should contain:
+
+1. Test plan
+2. Test cases
+3. Test execution report
+4. AI evaluation results
+5. Bug/defect report
+6. Security testing results
+7. Performance testing results
+8. User acceptance feedback
+9. Regression test results
+10. Final testing summary
+
+---
+
+# 36. Project Testing Conclusion
+
+The **EduGenie testing phase** must verify both conventional software behavior and the unique characteristics of a Gemini-powered application. Functional testing ensures that authentication, AI Tutor, quizzes, study planning, database operations, and progress tracking work correctly. Integration and system testing verify that the complete application operates as one system.
+
+AI-specific testing is particularly important. Gemini responses should be evaluated for **accuracy, relevance, clarity, educational usefulness, and appropriate difficulty**, while the application should gracefully handle incorrect, incomplete, unavailable, or unexpected AI responses.
+
+The final testing objective is to ensure that EduGenie delivers a reliable learning workflow:
+
+> **Ask → Understand → Practice → Evaluate → Revise**
+
+while maintaining appropriate **security, privacy, usability, and reliability**.
+
+Refine the EduGenie testing plan
+
+* Create a test case matrix
+* Write the testing chapter
