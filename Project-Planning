@@ -1,1 +1,865 @@
 Project-Planning
+# EduGenie – Google Gemini Powered Learning Assistant
+
+## Project Planning
+
+Project planning defines **how EduGenie will be developed, who will perform each activity, when it will be completed, what resources are required, and how project risks will be controlled**.
+
+The plan below is suitable for a **college mini-project, final-year project, or software-development project report**.
+
+---
+
+# 1. Project Planning Overview
+
+### Project Name
+
+**EduGenie – Google Gemini Powered Learning Assistant**
+
+### Project Type
+
+AI-powered educational software application
+
+### Development Approach
+
+**Agile / Iterative Development**
+
+### Estimated Duration
+
+**12 weeks**
+
+### Primary Technology
+
+**Google Gemini API**
+
+### Proposed Stack
+
+| Layer           | Technology                                        |
+| --------------- | ------------------------------------------------- |
+| Frontend        | React.js / HTML / CSS / JavaScript                |
+| Backend         | Node.js + Express                                 |
+| AI              | Google Gemini API                                 |
+| Database        | Firebase Firestore / PostgreSQL                   |
+| Authentication  | Firebase Authentication                           |
+| Version Control | Git + GitHub                                      |
+| Deployment      | Firebase / Google Cloud / suitable cloud platform |
+
+---
+
+# 2. Project Objectives
+
+The project aims to:
+
+1. Develop an AI-powered learning assistant.
+2. Integrate Google Gemini into an educational application.
+3. Provide interactive question answering.
+4. Generate personalized explanations.
+5. Generate quizzes and practice questions.
+6. Provide study-plan assistance.
+7. Track relevant learning progress.
+8. Provide personalized learning recommendations.
+9. Create an easy-to-use student interface.
+10. Develop a secure and scalable foundation for future educational features.
+
+---
+
+# 3. Project Scope
+
+## In Scope
+
+The initial project will include:
+
+* User registration and authentication
+* Student profile
+* AI Tutor
+* Gemini API integration
+* Concept explanation
+* Summarization
+* Quiz generation
+* Quiz evaluation
+* Basic study planner
+* Learning history
+* Progress dashboard
+* Basic recommendations
+
+## Future Scope
+
+Features that can be added later:
+
+* Voice-based tutor
+* Image-based question solving
+* Advanced document interaction
+* Multilingual learning
+* Gamification
+* Teacher dashboard
+* Adaptive learning
+* Advanced learning analytics
+
+---
+
+# 4. Development Methodology
+
+An **Agile methodology** is appropriate because AI-based applications often require experimentation and refinement.
+
+Instead of developing everything at once:
+
+```text id="q4wq9f"
+Plan
+  ↓
+Design
+  ↓
+Develop
+  ↓
+Test
+  ↓
+Review
+  ↓
+Improve
+  ↓
+Next Iteration
+```
+
+This allows the team to test Gemini responses and user experience early.
+
+---
+
+# 5. Project Phases
+
+The complete project can be divided into the following phases:
+
+1. Project initiation
+2. Requirement analysis
+3. Brainstorming and ideation
+4. System design
+5. UI/UX design
+6. Database development
+7. Backend development
+8. Gemini integration
+9. Frontend development
+10. Testing
+11. Deployment
+12. Documentation and presentation
+
+---
+
+# 6. 12-Week Project Schedule
+
+| Week | Major Activity             | Deliverable           |
+| ---- | -------------------------- | --------------------- |
+| 1    | Project initiation         | Problem definition    |
+| 2    | Requirement analysis       | SRS                   |
+| 3    | Ideation & planning        | Feature specification |
+| 4    | System design              | Architecture + UML    |
+| 5    | UI/UX design               | Wireframes/prototype  |
+| 6    | Database & authentication  | Working database/auth |
+| 7    | Backend development        | REST APIs             |
+| 8    | Gemini integration         | AI Tutor              |
+| 9    | Frontend development       | Functional UI         |
+| 10   | Quiz + Planner + Progress  | Core modules          |
+| 11   | Testing & debugging        | Tested application    |
+| 12   | Deployment + documentation | Final system + report |
+
+---
+
+# 7. Phase 1 – Project Initiation
+
+### Duration
+
+**Week 1**
+
+### Activities
+
+* Identify educational problem.
+* Define project objectives.
+* Identify target users.
+* Study existing learning-assistant concepts.
+* Define project scope.
+* Identify technologies.
+* Identify initial project risks.
+
+### Deliverables
+
+* Project proposal
+* Problem statement
+* Objectives
+* Scope
+* Initial technology selection
+
+---
+
+# 8. Phase 2 – Requirement Analysis
+
+### Duration
+
+**Week 2**
+
+### Activities
+
+* Identify stakeholders.
+* Identify functional requirements.
+* Identify non-functional requirements.
+* Define user roles.
+* Identify AI-specific requirements.
+* Define security requirements.
+* Define MVP features.
+
+### Deliverables
+
+**Software Requirements Specification (SRS)**
+
+Including:
+
+* Functional requirements
+* Non-functional requirements
+* Use cases
+* Constraints
+* Acceptance criteria
+
+---
+
+# 9. Phase 3 – Brainstorming and Ideation
+
+### Duration
+
+**Week 3**
+
+### Activities
+
+Generate and evaluate possible features:
+
+* AI Tutor
+* Quiz Generator
+* Study Planner
+* AI Notes
+* Flashcards
+* Progress Tracking
+* Personalized Recommendations
+* Document Q&A
+* Voice Tutor
+
+Then prioritize features according to:
+
+* Student value
+* Technical feasibility
+* Development time
+* Gemini capabilities
+* Project complexity
+
+### Deliverable
+
+**Final EduGenie feature set**
+
+---
+
+# 10. Phase 4 – System Design
+
+### Duration
+
+**Week 4**
+
+### Activities
+
+Design:
+
+* System architecture
+* Database architecture
+* API architecture
+* Gemini integration
+* Security architecture
+* Data flow
+* User flows
+
+### Diagrams
+
+Prepare:
+
+* System architecture diagram
+* Use-case diagram
+* Class diagram
+* Activity diagram
+* Sequence diagram
+* ER diagram
+* Data-flow diagram
+
+### Deliverable
+
+**System Design Document**
+
+---
+
+# 11. Phase 5 – UI/UX Design
+
+### Duration
+
+**Week 5**
+
+Design the major screens:
+
+### Screens
+
+1. Splash screen
+2. Login
+3. Registration
+4. Dashboard
+5. AI Tutor
+6. Quiz
+7. Quiz results
+8. Study planner
+9. Progress dashboard
+10. Profile
+
+### Design principles
+
+* Simple navigation
+* Clear typography
+* Responsive layout
+* Minimal cognitive load
+* Consistent components
+* Student-friendly interaction
+
+### Deliverable
+
+**UI prototype / wireframes**
+
+---
+
+# 12. Phase 6 – Database and Authentication
+
+### Duration
+
+**Week 6**
+
+### Activities
+
+Implement:
+
+* User database
+* Student profiles
+* Conversations
+* Quiz data
+* Quiz results
+* Study plans
+* Learning history
+
+Implement:
+
+* Registration
+* Login
+* Logout
+* Authentication
+* Authorization
+
+### Deliverable
+
+**Working database + authentication module**
+
+---
+
+# 13. Phase 7 – Backend Development
+
+### Duration
+
+**Week 7**
+
+Develop REST APIs for:
+
+```text id="09gbt2"
+Authentication
+      ↓
+User Management
+      ↓
+AI Requests
+      ↓
+Quiz
+      ↓
+Study Planner
+      ↓
+Progress
+```
+
+### Example APIs
+
+```text
+POST /api/auth/register
+POST /api/auth/login
+
+POST /api/ai/chat
+POST /api/ai/explain
+POST /api/ai/summarize
+
+POST /api/quiz/generate
+POST /api/quiz/submit
+
+POST /api/study-plan/generate
+
+GET /api/progress
+GET /api/recommendations
+```
+
+### Deliverable
+
+**Functional backend API**
+
+---
+
+# 14. Phase 8 – Gemini Integration
+
+### Duration
+
+**Week 8**
+
+This is one of the most important project phases.
+
+### Activities
+
+1. Configure Gemini API access.
+2. Create backend Gemini service.
+3. Design educational prompts.
+4. Implement context management.
+5. Implement response handling.
+6. Test different subjects.
+7. Test different difficulty levels.
+8. Handle API errors.
+9. Implement usage controls.
+
+### AI features
+
+```text id="2gsf1d"
+Gemini
+  │
+  ├── AI Tutor
+  ├── Explanation
+  ├── Summarization
+  ├── Quiz Generation
+  ├── Study Planning
+  └── Recommendations
+```
+
+### Deliverable
+
+**Working Gemini-powered AI module**
+
+---
+
+# 15. Phase 9 – Frontend Development
+
+### Duration
+
+**Week 9**
+
+Connect the UI with the backend.
+
+### Activities
+
+* Build dashboard.
+* Build chat interface.
+* Connect AI Tutor.
+* Build quiz interface.
+* Connect authentication.
+* Build study planner.
+* Build progress dashboard.
+
+### Deliverable
+
+**Functional frontend application**
+
+---
+
+# 16. Phase 10 – Core Feature Integration
+
+### Duration
+
+**Week 10**
+
+Integrate:
+
+### AI Tutor
+
+```text
+Question → Gemini → Explanation
+```
+
+### Quiz
+
+```text
+Topic → Gemini → Quiz → Student → Score
+```
+
+### Study Planner
+
+```text
+Student Goals → Planning Logic/Gemini → Schedule
+```
+
+### Progress
+
+```text
+Activities → Database → Dashboard
+```
+
+### Deliverable
+
+**Integrated EduGenie MVP**
+
+---
+
+# 17. Phase 11 – Testing
+
+### Duration
+
+**Week 11**
+
+Testing should occur at multiple levels.
+
+## Unit Testing
+
+Test individual functions:
+
+* Login
+* Quiz scoring
+* Prompt generation
+* Data validation
+
+## Integration Testing
+
+Test:
+
+```text
+Frontend
+   ↓
+Backend
+   ↓
+Gemini
+   ↓
+Database
+```
+
+## UI Testing
+
+Check:
+
+* Navigation
+* Forms
+* Buttons
+* Responsive layout
+* Error messages
+
+## AI Testing
+
+Test:
+
+* Accuracy
+* Relevance
+* Prompt consistency
+* Different student levels
+* Different subjects
+* Unexpected inputs
+* Hallucination/uncertainty handling
+
+---
+
+# 18. AI Response Evaluation
+
+Because EduGenie depends on generative AI, AI responses should be evaluated separately from normal software testing.
+
+Possible evaluation criteria:
+
+| Criterion             | Question                                     |
+| --------------------- | -------------------------------------------- |
+| Relevance             | Does the response answer the question?       |
+| Clarity               | Is it understandable?                        |
+| Educational value     | Does it help learning?                       |
+| Consistency           | Does similar input produce useful responses? |
+| Accuracy              | Is the content factually appropriate?        |
+| Level appropriateness | Is it suitable for the selected level?       |
+| Safety                | Does it avoid inappropriate output?          |
+
+---
+
+# 19. Phase 12 – Deployment
+
+### Duration
+
+**Week 12**
+
+### Activities
+
+* Configure production environment.
+* Configure environment variables.
+* Deploy frontend.
+* Deploy backend.
+* Configure database.
+* Configure Gemini API access.
+* Perform production testing.
+* Monitor errors.
+
+### Deliverable
+
+**Deployed EduGenie application**
+
+---
+
+# 20. Documentation Plan
+
+Documentation should be created throughout the project rather than only at the end.
+
+### Project documentation
+
+1. Abstract
+2. Introduction
+3. Problem statement
+4. Objectives
+5. Existing system
+6. Proposed system
+7. Requirement analysis
+8. Project planning
+9. System design
+10. Architecture
+11. Database design
+12. Implementation
+13. Gemini integration
+14. Testing
+15. Results
+16. Limitations
+17. Future enhancement
+18. Conclusion
+19. References
+
+---
+
+# 21. Team Structure
+
+For a **4-member team**, responsibilities could be divided as follows.
+
+| Member   | Responsibility                                      |
+| -------- | --------------------------------------------------- |
+| Member 1 | Project coordination + requirements + documentation |
+| Member 2 | Frontend + UI/UX                                    |
+| Member 3 | Backend + database                                  |
+| Member 4 | Gemini integration + AI testing                     |
+
+All members should participate in integration and testing.
+
+For a **3-member team**:
+
+| Member   | Responsibility                   |
+| -------- | -------------------------------- |
+| Member 1 | Frontend + UI                    |
+| Member 2 | Backend + database               |
+| Member 3 | Gemini + testing + documentation |
+
+---
+
+# 22. Work Breakdown Structure
+
+```text id="0m8h7m"
+EDUGENIE
+│
+├── 1. Planning
+│   ├── Problem Definition
+│   ├── Scope
+│   └── Requirements
+│
+├── 2. Design
+│   ├── Architecture
+│   ├── Database
+│   ├── UI/UX
+│   └── UML
+│
+├── 3. Development
+│   ├── Authentication
+│   ├── Frontend
+│   ├── Backend
+│   ├── Gemini
+│   ├── Quiz
+│   ├── Planner
+│   └── Progress
+│
+├── 4. Testing
+│   ├── Unit
+│   ├── Integration
+│   ├── UI
+│   └── AI Evaluation
+│
+├── 5. Deployment
+│
+└── 6. Documentation
+    ├── Report
+    ├── Presentation
+    └── Demonstration
+```
+
+---
+
+# 23. Milestones
+
+| Milestone | Target                            |
+| --------- | --------------------------------- |
+| M1        | Project proposal approved         |
+| M2        | Requirements completed            |
+| M3        | Design completed                  |
+| M4        | Database/authentication completed |
+| M5        | Gemini integration completed      |
+| M6        | MVP completed                     |
+| M7        | Testing completed                 |
+| M8        | Deployment completed              |
+| M9        | Final report completed            |
+| M10       | Final presentation/demo           |
+
+---
+
+# 24. Risk Management
+
+| Risk                      | Impact | Mitigation                                                     |
+| ------------------------- | ------ | -------------------------------------------------------------- |
+| Gemini API failure        | High   | Error handling + fallback messages                             |
+| API quota/usage limits    | High   | Usage controls and efficient prompts                           |
+| AI-generated inaccuracies | High   | Validation, clear uncertainty handling, educational safeguards |
+| Data privacy issue        | High   | Minimal data collection + access control                       |
+| Development delays        | Medium | Prioritize MVP                                                 |
+| Database failure          | High   | Backups and appropriate cloud configuration                    |
+| Poor UI usability         | Medium | Early prototype testing                                        |
+| Integration problems      | Medium | API testing before full integration                            |
+| Internet dependency       | Medium | Clear offline/unavailable-state messaging                      |
+| Scope expansion           | High   | Freeze MVP requirements                                        |
+
+---
+
+# 25. MVP Priority Plan
+
+To prevent the project from becoming too large, development should follow priority levels.
+
+### Priority 1 – Essential
+
+* Authentication
+* Dashboard
+* AI Tutor
+* Gemini integration
+* Concept explanation
+* Quiz generation
+* Quiz evaluation
+
+### Priority 2 – Important
+
+* Study planner
+* Summarization
+* Learning history
+* Progress dashboard
+
+### Priority 3 – Future
+
+* Voice interaction
+* Image learning
+* Advanced document Q&A
+* Gamification
+* Teacher dashboard
+* Advanced adaptive learning
+
+---
+
+# 26. Estimated Effort
+
+An approximate effort distribution for a 12-week student project:
+
+| Activity                 | Approx. Effort |
+| ------------------------ | -------------: |
+| Planning & requirements  |            10% |
+| System design            |            10% |
+| UI/UX                    |            10% |
+| Database/authentication  |            10% |
+| Backend                  |            15% |
+| Gemini integration       |            15% |
+| Frontend                 |            15% |
+| Testing                  |            10% |
+| Deployment/documentation |             5% |
+
+The percentages are planning estimates rather than fixed development measurements.
+
+---
+
+# 27. Project Monitoring
+
+Weekly reviews can track:
+
+* Tasks completed
+* Tasks pending
+* Bugs discovered
+* Gemini integration status
+* API issues
+* UI progress
+* Database progress
+* Testing status
+* Upcoming tasks
+
+### Weekly review format
+
+```text id="mtu2z8"
+Week:
+Completed:
+In Progress:
+Problems:
+Solutions:
+Next Week:
+```
+
+---
+
+# 28. Project Success Criteria
+
+EduGenie can be considered successful when:
+
+1. Users can register and authenticate.
+2. Students can ask educational questions.
+3. Gemini can provide relevant explanations.
+4. Students can generate quizzes.
+5. Quiz results can be calculated.
+6. Students can create study plans.
+7. Learning activity can be recorded.
+8. Basic recommendations can be generated.
+9. The application protects user information.
+10. The system can recover gracefully from AI/API failures.
+11. The complete application can be demonstrated end-to-end.
+
+---
+
+# 29. Final Project Roadmap
+
+```text id="j1q3m7"
+        PROJECT INITIATION
+                ↓
+       REQUIREMENT ANALYSIS
+                ↓
+          BRAINSTORMING
+                ↓
+           PROJECT DESIGN
+                ↓
+             UI/UX
+                ↓
+       DATABASE + AUTH
+                ↓
+        BACKEND DEVELOPMENT
+                ↓
+        GEMINI INTEGRATION
+                ↓
+       FRONTEND DEVELOPMENT
+                ↓
+       FEATURE INTEGRATION
+                ↓
+             TESTING
+                ↓
+           DEPLOYMENT
+                ↓
+        DOCUMENTATION
+                ↓
+        FINAL DEMONSTRATION
+```
+
+## Project Planning Conclusion
+
+**EduGenie's development should follow an iterative 12-week plan, beginning with requirements and design and progressing through backend, frontend, Gemini integration, testing, and deployment. The project should prioritize a manageable MVP—AI Tutor, Gemini integration, quizzes, study planning, and basic progress tracking—before adding advanced features.**
+
+This planning structure provides a practical path from the **ideation → requirement analysis → project design → implementation → testing → deployment** stages and can be directly incorporated into your project report.
+
+Continue planning EduGenie
+
+* Create the EduGenie Gantt chart
+* Define EduGenie project requirements
