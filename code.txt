@@ -1,0 +1,2483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>EduGenie | Google Gemini Powered Learning Assistant</title>
+
+  <meta
+    name="description"
+    content="EduGenie - Google Gemini Powered Learning Assistant"
+  />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6757e8;
+      --primary-dark: #5141cf;
+      --secondary: #8b7cf6;
+      --background: #f6f7fb;
+      --card: #ffffff;
+      --text: #1d2433;
+      --muted: #70798a;
+      --border: #e5e7ef;
+      --success: #24a148;
+      --danger: #e5484d;
+      --shadow: 0 10px 30px rgba(31, 35, 50, 0.08);
+    }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header {
+      height: 72px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 28px;
+
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 13px;
+
+      background: linear-gradient(
+        135deg,
+        #6757e8,
+        #9c82ff
+      );
+
+      color: white;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .brand h1 {
+      font-size: 20px;
+    }
+
+    .brand p {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      color: var(--success);
+      font-size: 13px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+    }
+
+    .profile {
+      width: 38px;
+      height: 38px;
+
+      border-radius: 50%;
+
+      background: #ece9ff;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+      position: fixed;
+
+      top: 72px;
+      left: 0;
+      bottom: 0;
+
+      width: 235px;
+
+      background: white;
+
+      border-right: 1px solid var(--border);
+
+      padding: 25px 14px;
+
+      z-index: 50;
+    }
+
+    .nav-title {
+      color: #a0a6b2;
+
+      font-size: 11px;
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      margin: 5px 13px 12px;
+    }
+
+    .nav-item {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 12px 14px;
+
+      border: 0;
+      background: transparent;
+
+      border-radius: 10px;
+
+      color: #5d6575;
+
+      margin-bottom: 5px;
+
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: #f3f2ff;
+      color: var(--primary);
+    }
+
+    .nav-item.active {
+      background: #eceaff;
+      color: var(--primary);
+
+      font-weight: 600;
+    }
+
+    .nav-icon {
+      width: 21px;
+      text-align: center;
+    }
+
+    .sidebar-bottom {
+      position: absolute;
+      bottom: 25px;
+      left: 15px;
+      right: 15px;
+    }
+
+    .gemini-card {
+      padding: 17px;
+
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f1efff,
+          #f8f5ff
+        );
+    }
+
+    .gemini-card strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .gemini-card p {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      margin-left: 235px;
+      padding: 105px 38px 40px;
+
+      max-width: 1400px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      margin-bottom: 27px;
+    }
+
+    .hero h2 {
+      font-size: 31px;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: var(--muted);
+    }
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    .welcome {
+      padding: 28px;
+
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #6757e8,
+          #8b75f4
+        );
+
+      color: white;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 25px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .welcome h2 {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      opacity: 0.88;
+    }
+
+    .welcome-icon {
+      font-size: 75px;
+      opacity: 0.9;
+    }
+
+    .stats {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 18px;
+
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 16px;
+
+      padding: 20px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card .icon {
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 11px;
+
+      background: #efedff;
+
+      margin-bottom: 13px;
+
+      font-size: 19px;
+    }
+
+    .stat-card strong {
+      display: block;
+
+      font-size: 26px;
+
+      margin-bottom: 3px;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+
+      grid-template-columns:
+        1.5fr 1fr;
+
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 16px;
+
+      padding: 23px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 20px;
+    }
+
+    .card-header h3 {
+      font-size: 17px;
+    }
+
+    .card-header a {
+      color: var(--primary);
+
+      font-size: 12px;
+
+      cursor: pointer;
+    }
+
+    .activity {
+      display: flex;
+
+      align-items: center;
+
+      gap: 13px;
+
+      padding: 13px 0;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .activity:last-child {
+      border-bottom: 0;
+    }
+
+    .activity-icon {
+      width: 38px;
+      height: 38px;
+
+      background: #f0efff;
+
+      border-radius: 10px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .activity-info {
+      flex: 1;
+    }
+
+    .activity-info strong {
+      display: block;
+
+      font-size: 13px;
+
+      margin-bottom: 3px;
+    }
+
+    .activity-info span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* =========================
+       FORMS
+    ========================= */
+
+    .form-card {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 18px;
+
+      padding: 26px;
+
+      box-shadow: var(--shadow);
+
+      max-width: 850px;
+    }
+
+    .form-row {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+
+      font-size: 13px;
+
+      font-weight: 600;
+
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+
+      border: 1px solid var(--border);
+
+      border-radius: 10px;
+
+      padding: 12px 14px;
+
+      background: white;
+
+      outline: none;
+
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 155px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(103, 87, 232, 0.09);
+    }
+
+    .primary-btn {
+      border: 0;
+
+      padding: 12px 20px;
+
+      background: var(--primary);
+
+      color: white;
+
+      border-radius: 10px;
+
+      font-weight: 600;
+
+      transition: 0.2s;
+    }
+
+    .primary-btn:hover {
+      background: var(--primary-dark);
+
+      transform: translateY(-1px);
+    }
+
+    .secondary-btn {
+      border: 1px solid var(--border);
+
+      background: white;
+
+      padding: 11px 17px;
+
+      border-radius: 9px;
+
+      color: var(--text);
+    }
+
+    /* =========================
+       AI CHAT
+    ========================= */
+
+    .chat-container {
+      max-width: 950px;
+    }
+
+    .chat-box {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 18px;
+
+      min-height: 480px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      box-shadow: var(--shadow);
+
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 17px 21px;
+
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+    }
+
+    .ai-avatar {
+      width: 39px;
+      height: 39px;
+
+      border-radius: 11px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #ece9ff;
+
+      color: var(--primary);
+
+      font-weight: 700;
+    }
+
+    .chat-header strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .chat-header span {
+      font-size: 11px;
+      color: var(--success);
+    }
+
+    .messages {
+      flex: 1;
+
+      padding: 24px;
+
+      overflow-y: auto;
+
+      max-height: 390px;
+    }
+
+    .message {
+      display: flex;
+
+      gap: 10px;
+
+      margin-bottom: 20px;
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message-content {
+      max-width: 75%;
+
+      padding: 13px 16px;
+
+      border-radius: 14px;
+
+      background: #f2f1ff;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+    }
+
+    .message.user .message-content {
+      background: var(--primary);
+      color: white;
+    }
+
+    .chat-input {
+      padding: 15px;
+
+      border-top: 1px solid var(--border);
+
+      display: flex;
+
+      gap: 10px;
+    }
+
+    .chat-input textarea {
+      min-height: 45px;
+      max-height: 100px;
+    }
+
+    .chat-input button {
+      align-self: flex-end;
+      height: 45px;
+    }
+
+    /* =========================
+       QUIZ
+    ========================= */
+
+    .quiz-options {
+      display: grid;
+
+      gap: 10px;
+
+      margin-top: 15px;
+    }
+
+    .quiz-option {
+      border: 1px solid var(--border);
+
+      padding: 13px;
+
+      border-radius: 9px;
+
+      cursor: pointer;
+
+      transition: 0.15s;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--primary);
+      background: #f8f7ff;
+    }
+
+    .quiz-option.selected {
+      background: #eeecff;
+      border-color: var(--primary);
+    }
+
+    /* =========================
+       PROGRESS
+    ========================= */
+
+    .progress-item {
+      margin-bottom: 20px;
+    }
+
+    .progress-top {
+      display: flex;
+
+      justify-content: space-between;
+
+      margin-bottom: 7px;
+
+      font-size: 13px;
+    }
+
+    .progress-bar {
+      height: 9px;
+
+      background: #eceef3;
+
+      border-radius: 20px;
+
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+
+      background: linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary)
+      );
+
+      border-radius: 20px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    .mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 1000px) {
+
+      .stats {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 750px) {
+
+      .header {
+        padding: 0 15px;
+      }
+
+      .status {
+        display: none;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: 0.3s;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 95px 17px 30px;
+      }
+
+      .mobile-menu {
+        display: block;
+
+        border: 0;
+
+        background: transparent;
+
+        font-size: 23px;
+
+        margin-right: 10px;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+      }
+
+      .welcome {
+        padding: 22px;
+      }
+
+      .welcome-icon {
+        display: none;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h2 {
+        font-size: 25px;
+      }
+
+      .message-content {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header class="header">
+
+    <div class="header-left">
+
+      <button
+        class="mobile-menu"
+        onclick="toggleSidebar()"
+      >
+        ☰
+      </button>
+
+      <div class="brand">
+
+        <div class="brand-icon">
+          E
+        </div>
+
+        <div>
+          <h1>EduGenie</h1>
+
+          <p>
+            Google Gemini Powered Learning Assistant
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="header-right">
+
+      <div class="status">
+        <span class="status-dot"></span>
+        AI Online
+      </div>
+
+      <div class="profile">
+        S
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       SIDEBAR
+  ========================== -->
+
+  <aside
+    class="sidebar"
+    id="sidebar"
+  >
+
+    <div class="nav-title">
+      Learning
+    </div>
+
+    <button
+      class="nav-item active"
+      onclick="showPage('dashboard', this)"
+    >
+      <span class="nav-icon">🏠</span>
+      Dashboard
+    </button>
+
+    <button
+      class="nav-item"
+      onclick="showPage('tutor', this)"
+    >
+      <span class="nav-icon">🤖</span>
+      AI Tutor
+    </button>
+
+    <button
+      class="nav-item"
+      onclick="showPage('notes', this)"
+    >
+      <span class="nav-icon">📝</span>
+      Study Notes
+    </button>
+
+    <button
+      class="nav-item"
+      onclick="showPage('quiz', this)"
+    >
+      <span class="nav-icon">🧠</span>
+      Quiz Generator
+    </button>
+
+    <button
+      class="nav-item"
+      onclick="showPage('planner', this)"
+    >
+      <span class="nav-icon">📅</span>
+      Study Planner
+    </button>
+
+    <button
+      class="nav-item"
+      onclick="showPage('progress', this)"
+    >
+      <span class="nav-icon">📊</span>
+      My Progress
+    </button>
+
+
+    <div class="nav-title" style="margin-top:25px;">
+      Account
+    </div>
+
+    <button class="nav-item">
+      <span class="nav-icon">⚙️</span>
+      Settings
+    </button>
+
+    <button class="nav-item">
+      <span class="nav-icon">❓</span>
+      Help
+    </button>
+
+
+    <div class="sidebar-bottom">
+
+      <div class="gemini-card">
+
+        <strong>
+          ✨ Powered by Gemini
+        </strong>
+
+        <p>
+          Learn faster with AI-powered
+          explanations, quizzes and
+          personalized study assistance.
+        </p>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main class="main">
+
+
+    <!-- =========================
+         DASHBOARD
+    ========================== -->
+
+    <section
+      id="dashboard"
+      class="page active"
+    >
+
+      <div class="welcome">
+
+        <div>
+
+          <h2>
+            Welcome back, Student! 👋
+          </h2>
+
+          <p>
+            Ready to learn something new today?
+          </p>
+
+        </div>
+
+        <div class="welcome-icon">
+          🎓
+        </div>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat-card">
+
+          <div class="icon">
+            📚
+          </div>
+
+          <strong>
+            12
+          </strong>
+
+          <span>
+            Topics Studied
+          </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="icon">
+            🧠
+          </div>
+
+          <strong>
+            8
+          </strong>
+
+          <span>
+            Quizzes Completed
+          </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="icon">
+            ⭐
+          </div>
+
+          <strong>
+            82%
+          </strong>
+
+          <span>
+            Average Score
+          </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="icon">
+            🔥
+          </div>
+
+          <strong>
+            7
+          </strong>
+
+          <span>
+            Day Learning Streak
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="dashboard-grid">
+
+        <div class="card">
+
+          <div class="card-header">
+
+            <h3>
+              Recent Learning
+            </h3>
+
+            <a
+              onclick="showPageById('progress')"
+            >
+              View all
+            </a>
+
+          </div>
+
+
+          <div class="activity">
+
+            <div class="activity-icon">
+              🤖
+            </div>
+
+            <div class="activity-info">
+
+              <strong>
+                Binary Search
+              </strong>
+
+              <span>
+                AI Tutor · Today
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="activity">
+
+            <div class="activity-icon">
+              🧠
+            </div>
+
+            <div class="activity-info">
+
+              <strong>
+                Data Structures Quiz
+              </strong>
+
+              <span>
+                Score: 8/10 · Yesterday
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="activity">
+
+            <div class="activity-icon">
+              📝
+            </div>
+
+            <div class="activity-info">
+
+              <strong>
+                Algorithms Notes
+              </strong>
+
+              <span>
+                Summary generated · Yesterday
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-header">
+
+            <h3>
+              Recommended Revision
+            </h3>
+
+          </div>
+
+
+          <div class="progress-item">
+
+            <div class="progress-top">
+              <span>
+                Recursion
+              </span>
+
+              <span>
+                60%
+              </span>
+            </div>
+
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                style="width:60%"
+              ></div>
+            </div>
+
+          </div>
+
+
+          <div class="progress-item">
+
+            <div class="progress-top">
+              <span>
+                Binary Trees
+              </span>
+
+              <span>
+                45%
+              </span>
+            </div>
+
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                style="width:45%"
+              ></div>
+            </div>
+
+          </div>
+
+
+          <div class="progress-item">
+
+            <div class="progress-top">
+              <span>
+                Graph Traversal
+              </span>
+
+              <span>
+                35%
+              </span>
+            </div>
+
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                style="width:35%"
+              ></div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         AI TUTOR
+    ========================== -->
+
+    <section
+      id="tutor"
+      class="page"
+    >
+
+      <div class="hero">
+
+        <h2>
+          AI Tutor
+        </h2>
+
+        <p>
+          Ask EduGenie anything about your studies.
+        </p>
+
+      </div>
+
+
+      <div class="chat-container">
+
+        <div class="chat-box">
+
+          <div class="chat-header">
+
+            <div class="ai-avatar">
+              E
+            </div>
+
+            <div>
+
+              <strong>
+                EduGenie AI
+              </strong>
+
+              <span>
+                ● Ready to help
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div
+            class="messages"
+            id="messages"
+          >
+
+            <div class="message">
+
+              <div class="ai-avatar">
+                E
+              </div>
+
+              <div class="message-content">
+
+                Hello! 👋
+
+                <br><br>
+
+                I'm EduGenie, your AI learning
+                assistant.
+
+                <br><br>
+
+                Ask me to explain a concept,
+                solve a learning problem, or
+                help you prepare for an exam.
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="chat-input">
+
+            <textarea
+              id="question"
+              placeholder="Ask EduGenie a question..."
+              onkeydown="handleEnter(event)"
+            ></textarea>
+
+            <button
+              class="primary-btn"
+              onclick="askTutor()"
+            >
+              Send ✨
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         NOTES
+    ========================== -->
+
+    <section
+      id="notes"
+      class="page"
+    >
+
+      <div class="hero">
+
+        <h2>
+          Study Notes Generator
+        </h2>
+
+        <p>
+          Convert study material into
+          easy-to-revise notes.
+        </p>
+
+      </div>
+
+
+      <div class="form-card">
+
+        <div class="form-group">
+
+          <label>
+            Study Material
+          </label>
+
+          <textarea
+            id="studyMaterial"
+            placeholder="Paste your study material here..."
+          ></textarea>
+
+        </div>
+
+        <button
+          class="primary-btn"
+          onclick="generateNotes()"
+        >
+          Generate Notes ✨
+        </button>
+
+      </div>
+
+
+      <div
+        id="notesResult"
+        style="
+          margin-top:20px;
+          max-width:850px;
+        "
+      ></div>
+
+    </section>
+
+
+    <!-- =========================
+         QUIZ
+    ========================== -->
+
+    <section
+      id="quiz"
+      class="page"
+    >
+
+      <div class="hero">
+
+        <h2>
+          AI Quiz Generator
+        </h2>
+
+        <p>
+          Create practice questions for any topic.
+        </p>
+
+      </div>
+
+
+      <div class="form-card">
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label>
+              Subject
+            </label>
+
+            <input
+              id="quizSubject"
+              value="Computer Science"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Topic
+            </label>
+
+            <input
+              id="quizTopic"
+              value="Data Structures"
+            />
+
+          </div>
+
+        </div>
+
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label>
+              Difficulty
+            </label>
+
+            <select id="quizDifficulty">
+
+              <option>
+                Beginner
+              </option>
+
+              <option selected>
+                Intermediate
+              </option>
+
+              <option>
+                Advanced
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Number of Questions
+            </label>
+
+            <select id="questionCount">
+
+              <option>5</option>
+              <option>10</option>
+              <option>15</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="primary-btn"
+          onclick="generateQuiz()"
+        >
+          Generate Quiz 🧠
+        </button>
+
+      </div>
+
+
+      <div
+        id="quizResult"
+        style="
+          margin-top:20px;
+          max-width:850px;
+        "
+      ></div>
+
+    </section>
+
+
+    <!-- =========================
+         PLANNER
+    ========================== -->
+
+    <section
+      id="planner"
+      class="page"
+    >
+
+      <div class="hero">
+
+        <h2>
+          AI Study Planner
+        </h2>
+
+        <p>
+          Create a personalized study schedule.
+        </p>
+
+      </div>
+
+
+      <div class="form-card">
+
+        <div class="form-group">
+
+          <label>
+            Subjects
+          </label>
+
+          <input
+            id="subjects"
+            placeholder="e.g. Mathematics, Physics, Computer Science"
+          />
+
+        </div>
+
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label>
+              Exam Date
+            </label>
+
+            <input
+              type="date"
+              id="examDate"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Study Hours Per Day
+            </label>
+
+            <input
+              type="number"
+              id="studyHours"
+              value="2"
+              min="1"
+              max="12"
+            />
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Learning Level
+          </label>
+
+          <select id="studyLevel">
+
+            <option>
+              Beginner
+            </option>
+
+            <option selected>
+              Intermediate
+            </option>
+
+            <option>
+              Advanced
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <button
+          class="primary-btn"
+          onclick="generatePlan()"
+        >
+          Generate Study Plan 📅
+        </button>
+
+      </div>
+
+
+      <div
+        id="planResult"
+        style="
+          margin-top:20px;
+          max-width:850px;
+        "
+      ></div>
+
+    </section>
+
+
+    <!-- =========================
+         PROGRESS
+    ========================== -->
+
+    <section
+      id="progress"
+      class="page"
+    >
+
+      <div class="hero">
+
+        <h2>
+          My Learning Progress
+        </h2>
+
+        <p>
+          Monitor your learning journey.
+        </p>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat-card">
+
+          <div class="icon">
+            📚
+          </div>
+
+          <strong>
+            12
+          </strong>
+
+          <span>
+            Topics Studied
+          </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="icon">
+            🧠
+          </div>
+
+          <strong>
+            8
+          </strong>
+
+          <span>
+            Quizzes
+          </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="icon">
+            ⭐
+          </div>
+
+          <strong>
+            82%
+          </strong>
+
+          <span>
+            Average Score
+          </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="icon">
+            ⏱️
+          </div>
+
+          <strong>
+            18h
+          </strong>
+
+          <span>
+            Learning Time
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-header">
+
+          <h3>
+            Topic Progress
+          </h3>
+
+        </div>
+
+
+        <div class="progress-item">
+
+          <div class="progress-top">
+
+            <span>
+              Data Structures
+            </span>
+
+            <span>
+              85%
+            </span>
+
+          </div>
+
+          <div class="progress-bar">
+
+            <div
+              class="progress-fill"
+              style="width:85%"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="progress-item">
+
+          <div class="progress-top">
+
+            <span>
+              Algorithms
+            </span>
+
+            <span>
+              72%
+            </span>
+
+          </div>
+
+          <div class="progress-bar">
+
+            <div
+              class="progress-fill"
+              style="width:72%"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="progress-item">
+
+          <div class="progress-top">
+
+            <span>
+              Database Systems
+            </span>
+
+            <span>
+              65%
+            </span>
+
+          </div>
+
+          <div class="progress-bar">
+
+            <div
+              class="progress-fill"
+              style="width:65%"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="progress-item">
+
+          <div class="progress-top">
+
+            <span>
+              Operating Systems
+            </span>
+
+            <span>
+              48%
+            </span>
+
+          </div>
+
+          <div class="progress-bar">
+
+            <div
+              class="progress-fill"
+              style="width:48%"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script>
+
+    /*
+    ------------------------------------
+    Navigation
+    ------------------------------------
+    */
+
+    function showPage(pageId, button) {
+
+      document
+        .querySelectorAll(".page")
+        .forEach(page => {
+          page.classList.remove("active");
+        });
+
+      document
+        .getElementById(pageId)
+        .classList.add("active");
+
+
+      document
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
+          item.classList.remove("active");
+        });
+
+
+      if (button) {
+        button.classList.add("active");
+      }
+
+
+      document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    }
+
+
+    function showPageById(pageId) {
+
+      const button =
+        document.querySelector(
+          `[onclick*="'${pageId}'"]`
+        );
+
+      showPage(pageId, button);
+
+    }
+
+
+    function toggleSidebar() {
+
+      document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+    }
+
+
+    /*
+    ------------------------------------
+    AI TUTOR
+    ------------------------------------
+    */
+
+    function handleEnter(event) {
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+        event.preventDefault();
+
+        askTutor();
+
+      }
+
+    }
+
+
+    function addMessage(
+      message,
+      user = false
+    ) {
+
+      const messages =
+        document.getElementById(
+          "messages"
+        );
+
+      const wrapper =
+        document.createElement("div");
+
+      wrapper.className =
+        user
+          ? "message user"
+          : "message";
+
+
+      const content =
+        document.createElement("div");
+
+      content.className =
+        "message-content";
+
+      content.textContent =
+        message;
+
+
+      wrapper.appendChild(content);
+
+      messages.appendChild(wrapper);
+
+      messages.scrollTop =
+        messages.scrollHeight;
+
+    }
+
+
+    async function askTutor() {
+
+      const input =
+        document.getElementById(
+          "question"
+        );
+
+      const question =
+        input.value.trim();
+
+
+      if (!question) {
+        return;
+      }
+
+
+      addMessage(
+        question,
+        true
+      );
+
+      input.value = "";
+
+
+      /*
+       * DEMO RESPONSE
+       *
+       * Replace this section with
+       * a fetch() call to your backend.
+       */
+
+      setTimeout(() => {
+
+        addMessage(
+          "I'm ready to help! Connect this interface to your EduGenie backend and Gemini API to receive a real AI-generated answer."
+        );
+
+      }, 600);
+
+    }
+
+
+    /*
+    ------------------------------------
+    NOTES
+    ------------------------------------
+    */
+
+    function generateNotes() {
+
+      const material =
+        document
+          .getElementById(
+            "studyMaterial"
+          )
+          .value
+          .trim();
+
+
+      if (!material) {
+
+        alert(
+          "Please enter study material."
+        );
+
+        return;
+
+      }
+
+
+      const result =
+        document.getElementById(
+          "notesResult"
+        );
+
+
+      result.innerHTML = `
+
+        <div class="card">
+
+          <div class="card-header">
+
+            <h3>
+              📝 Generated Notes
+            </h3>
+
+          </div>
+
+          <p style="
+            line-height:1.7;
+            color:#606978;
+          ">
+
+            <strong>
+              Key Points
+            </strong>
+
+            <br><br>
+
+            • The material contains
+            important concepts that should
+            be reviewed.
+
+            <br><br>
+
+            • Identify the major definitions,
+            principles and examples.
+
+            <br><br>
+
+            • Use these points for quick
+            revision before your examination.
+
+            <br><br>
+
+            <strong>
+              Note:
+            </strong>
+
+            Connect this feature to the
+            Gemini backend for real
+            AI-generated summaries.
+
+          </p>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /*
+    ------------------------------------
+    QUIZ
+    ------------------------------------
+    */
+
+    function generateQuiz() {
+
+      const subject =
+        document
+          .getElementById(
+            "quizSubject"
+          )
+          .value;
+
+
+      const topic =
+        document
+          .getElementById(
+            "quizTopic"
+          )
+          .value;
+
+
+      const result =
+        document.getElementById(
+          "quizResult"
+        );
+
+
+      result.innerHTML = `
+
+        <div class="card">
+
+          <div class="card-header">
+
+            <h3>
+              🧠 Practice Quiz
+            </h3>
+
+          </div>
+
+          <h3>
+            1. What is an important
+            concept in ${topic}?
+          </h3>
+
+          <div class="quiz-options">
+
+            <div
+              class="quiz-option"
+              onclick="selectOption(this)"
+            >
+              Option A
+            </div>
+
+            <div
+              class="quiz-option"
+              onclick="selectOption(this)"
+            >
+              Option B
+            </div>
+
+            <div
+              class="quiz-option"
+              onclick="selectOption(this)"
+            >
+              Option C
+            </div>
+
+            <div
+              class="quiz-option"
+              onclick="selectOption(this)"
+            >
+              Option D
+            </div>
+
+          </div>
+
+          <br>
+
+          <button
+            class="primary-btn"
+            onclick="submitDemoQuiz()"
+          >
+            Submit Quiz
+          </button>
+
+        </div>
+
+      `;
+
+    }
+
+
+    function selectOption(element) {
+
+      document
+        .querySelectorAll(
+          ".quiz-option"
+        )
+        .forEach(option => {
+          option.classList.remove(
+            "selected"
+          );
+        });
+
+
+      element.classList.add(
+        "selected"
+      );
+
+    }
+
+
+    function submitDemoQuiz() {
+
+      alert(
+        "Quiz submitted! Connect the quiz module to your backend for real AI-generated questions and scoring."
+      );
+
+    }
+
+
+    /*
+    ------------------------------------
+    STUDY PLAN
+    ------------------------------------
+    */
+
+    function generatePlan() {
+
+      const subjects =
+        document
+          .getElementById(
+            "subjects"
+          )
+          .value;
+
+
+      const date =
+        document
+          .getElementById(
+            "examDate"
+          )
+          .value;
+
+
+      const hours =
+        document
+          .getElementById(
+            "studyHours"
+          )
+          .value;
+
+
+      if (!subjects || !date) {
+
+        alert(
+          "Please enter subjects and exam date."
+        );
+
+        return;
+
+      }
+
+
+      const result =
+        document.getElementById(
+          "planResult"
+        );
+
+
+      result.innerHTML = `
+
+        <div class="card">
+
+          <div class="card-header">
+
+            <h3>
+              📅 Your Study Plan
+            </h3>
+
+          </div>
+
+          <div class="activity">
+
+            <div class="activity-icon">
+              1
+            </div>
+
+            <div class="activity-info">
+
+              <strong>
+                Learn Core Concepts
+              </strong>
+
+              <span>
+                Study ${subjects}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="activity">
+
+            <div class="activity-icon">
+              2
+            </div>
+
+            <div class="activity-info">
+
+              <strong>
+                Practice
+              </strong>
+
+              <span>
+                Complete practice questions
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="activity">
+
+            <div class="activity-icon">
+              3
+            </div>
+
+            <div class="activity-info">
+
+              <strong>
+                Revision
+              </strong>
+
+              <span>
+                Review difficult concepts
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="activity">
+
+            <div class="activity-icon">
+              4
+            </div>
+
+            <div class="activity-info">
+
+              <strong>
+                Final Preparation
+              </strong>
+
+              <span>
+                Complete mock tests before ${date}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <br>
+
+          <p style="
+            color:#70798a;
+            font-size:13px;
+          ">
+
+            Recommended study time:
+            <strong>
+              ${hours} hours/day
+            </strong>
+
+          </p>
+
+        </div>
+
+      `;
+
+    }
+
+  </script>
+
+</body>
+</html>
