@@ -1,1 +1,818 @@
-Project-Design
+EduGenie – Google Gemini Powered Learning Assistant
+Project Design
+The Project Design phase converts the requirements of EduGenie into a technical blueprint showing how the system will be structured, how users interact with it, how data flows through the application, and how Google Gemini is integrated.
+________________________________________
+1. Project Design Overview
+EduGenie is designed as a web-based AI learning assistant with Google Gemini as its generative-AI engine.
+The overall design follows:
+User → EduGenie Application → Backend → Gemini AI → Personalized Learning Response
+The system combines AI tutoring with:
+•	Personalized learning
+•	Study planning
+•	Quiz generation
+•	Learning-material summarization
+•	Progress tracking
+•	Recommendations
+________________________________________
+2. Design Goals
+The system design should achieve the following:
+1.	Provide a simple student-friendly interface.
+2.	Separate frontend, backend, AI, and database responsibilities.
+3.	Keep Gemini API credentials secure.
+4.	Maintain relevant conversation context.
+5.	Support personalized learning.
+6.	Allow future expansion.
+7.	Handle AI/API failures gracefully.
+8.	Protect student data.
+9.	Provide responsive performance.
+10.	Support future multimodal and multilingual capabilities.
+________________________________________
+3. High-Level System Architecture
+                    ┌───────────────────────┐
+                    │       STUDENT         │
+                    └───────────┬───────────┘
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │    EDU GENIE UI       │
+                    │  Web / Mobile UI      │
+                    └───────────┬───────────┘
+                                │
+                         HTTPS / REST
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │     BACKEND API       │
+                    │ Authentication        │
+                    │ Business Logic        │
+                    │ Prompt Management     │
+                    └──────┬────────┬───────┘
+                           │        │
+                 ┌─────────┘        └─────────┐
+                 ▼                            ▼
+       ┌──────────────────┐          ┌──────────────────┐
+       │    DATABASE      │          │   GEMINI API     │
+       │                  │          │                  │
+       │ Users            │          │ AI Tutor         │
+       │ Profiles         │          │ Explanations     │
+       │ Quiz Results     │          │ Summaries        │
+       │ Study Plans      │          │ Quiz Generation  │
+       │ Learning History │          │ Recommendations  │
+       └──────────────────┘          └──────────────────┘
+________________________________________
+4. Three-Tier Architecture
+EduGenie can use a three-tier architecture.
+Layer 1 – Presentation Layer
+Responsible for user interaction.
+Components
+•	Login/Register
+•	Dashboard
+•	AI Tutor
+•	Quiz interface
+•	Study planner
+•	Progress dashboard
+•	Profile
+Possible technologies:
+•	React
+•	HTML
+•	CSS
+•	JavaScript
+________________________________________
+Layer 2 – Application Layer
+The backend controls application logic.
+Responsibilities
+•	Authentication
+•	Request validation
+•	User management
+•	Prompt construction
+•	Gemini API communication
+•	Quiz processing
+•	Study-plan management
+•	Progress calculation
+•	Recommendation logic
+Possible technologies:
+•	Node.js + Express
+•	Python + FastAPI/Flask
+________________________________________
+Layer 3 – Data Layer
+Responsible for persistent information.
+Potential database:
+•	Firebase Firestore
+•	PostgreSQL
+•	MongoDB
+Stores
+•	User profiles
+•	Conversations
+•	Quiz results
+•	Study plans
+•	Learning history
+•	Preferences
+________________________________________
+5. Major System Modules
+Module 1 – Authentication
+Provides:
+•	Registration
+•	Login
+•	Logout
+•	Password management
+•	Session management
+Flow
+User
+ ↓
+Login Form
+ ↓
+Authentication Service
+ ↓
+Credential Verification
+ ↓
+Authenticated Session
+ ↓
+Dashboard
+________________________________________
+6. Module 2 – Student Profile
+Stores relevant learning preferences.
+Example
+Student Profile
+ ├── Name
+ ├── Educational Level
+ ├── Preferred Language
+ ├── Subjects
+ ├── Learning Level
+ └── Study Goals
+The profile can provide context for personalized AI interactions.
+________________________________________
+7. Module 3 – AI Tutor
+This is the core module of EduGenie.
+Workflow
+Student Question
+       ↓
+Input Validation
+       ↓
+Retrieve Relevant Context
+       ↓
+Construct Educational Prompt
+       ↓
+Gemini API
+       ↓
+AI Response
+       ↓
+Response Validation/Formatting
+       ↓
+Display to Student
+Example
+Student:
+"Explain recursion."
+EduGenie can construct a prompt containing:
+•	Student level
+•	Subject
+•	Topic
+•	Preferred language
+•	Desired explanation style
+Gemini then generates the response.
+________________________________________
+8. Prompt Engineering Design
+EduGenie should avoid sending every request as a simple unrestricted prompt.
+Instead, use structured prompts.
+Conceptual structure
+SYSTEM ROLE
+      ↓
+EDUCATIONAL OBJECTIVE
+      ↓
+STUDENT CONTEXT
+      ↓
+QUESTION
+      ↓
+OUTPUT FORMAT
+      ↓
+SAFETY / ACCURACY INSTRUCTIONS
+Example
+Role:
+You are EduGenie, an educational assistant.
+
+Student Level:
+Beginner
+
+Subject:
+Computer Science
+
+Topic:
+Recursion
+
+Task:
+Explain recursion.
+
+Output:
+1. Simple definition
+2. Analogy
+3. Example
+4. Step-by-step explanation
+5. Practice question
+This makes AI responses more consistent.
+________________________________________
+9. Module 4 – Study Material Processor
+This module handles learning content.
+Input
+•	Text
+•	Notes
+•	Supported documents
+•	Potentially images in later versions
+Processing
+Learning Material
+       ↓
+Content Extraction
+       ↓
+Context Preparation
+       ↓
+Gemini
+       ↓
+Summary / Notes / Q&A
+Outputs
+•	Summary
+•	Key points
+•	Definitions
+•	Questions
+•	Revision notes
+________________________________________
+10. Module 5 – Quiz Generator
+The quiz module uses Gemini to generate questions.
+Input
+Subject
+Topic
+Difficulty
+Number of questions
+Question type
+Process
+Student Settings
+      ↓
+Prompt Builder
+      ↓
+Gemini
+      ↓
+Generated Questions
+      ↓
+Quiz Formatter
+      ↓
+Student
+________________________________________
+11. Quiz Evaluation Design
+For objective questions:
+Student Answer
+      ↓
+Compare with Answer Key
+      ↓
+Calculate Score
+      ↓
+Store Result
+      ↓
+Generate Feedback
+Example:
+Score: 8/10
+
+Correct: 8
+Incorrect: 2
+
+Revision Suggested:
+• Binary Trees
+• Tree Traversal
+Where evaluation involves subjective answers, the system should clearly distinguish AI-generated feedback from authoritative grading.
+________________________________________
+12. Module 6 – Study Planner
+The student provides:
+•	Subjects
+•	Topics
+•	Examination date
+•	Available study hours
+•	Current preparation level
+The system generates a plan.
+Student Input
+      ↓
+Planning Logic
+      ↓
+Gemini-assisted Plan Generation
+      ↓
+Study Schedule
+      ↓
+Student Dashboard
+________________________________________
+13. Module 7 – Progress Tracking
+The system records relevant learning activities.
+Example
+Learning Activity
+       ↓
+Database
+       ↓
+Progress Analyzer
+       ↓
+Performance Summary
+       ↓
+Recommendation Engine
+Possible metrics:
+•	Quizzes completed
+•	Quiz scores
+•	Topics studied
+•	Study-plan completion
+•	Revision history
+________________________________________
+14. Module 8 – Recommendation Engine
+The recommendation module uses learning history to suggest future activities.
+Example
+Quiz Results
+     +
+Topics Studied
+     +
+Learning History
+     ↓
+Recommendation Logic
+     ↓
+Revision Suggestions
+Example output:
+Recommended: Practice recursion before moving to dynamic programming.
+Recommendations should be presented as guidance rather than as definitive judgments about the student's ability.
+________________________________________
+15. Database Design
+A relational design could contain the following tables.
+Users
+Field	Type
+user_id	UUID
+name	String
+email	String
+password_hash	String
+created_at	Timestamp
+________________________________________
+Student_Profile
+Field	Type
+profile_id	UUID
+user_id	UUID
+education_level	String
+preferred_language	String
+learning_goal	String
+________________________________________
+Conversations
+Field	Type
+conversation_id	UUID
+user_id	UUID
+title	String
+created_at	Timestamp
+________________________________________
+Messages
+Field	Type
+message_id	UUID
+conversation_id	UUID
+sender	String
+content	Text
+timestamp	Timestamp
+________________________________________
+Quizzes
+Field	Type
+quiz_id	UUID
+user_id	UUID
+subject	String
+topic	String
+difficulty	String
+created_at	Timestamp
+________________________________________
+Quiz_Results
+Field	Type
+result_id	UUID
+quiz_id	UUID
+score	Integer
+total_questions	Integer
+completed_at	Timestamp
+________________________________________
+Study_Plans
+Field	Type
+plan_id	UUID
+user_id	UUID
+subject	String
+exam_date	Date
+plan_data	JSON
+created_at	Timestamp
+________________________________________
+16. Entity Relationship Design
+USER
+ │
+ ├────────── STUDENT_PROFILE
+ │
+ ├────────── CONVERSATIONS
+ │                 │
+ │                 └──── MESSAGES
+ │
+ ├────────── QUIZZES
+ │                 │
+ │                 └──── QUIZ_RESULTS
+ │
+ └────────── STUDY_PLANS
+One user can have:
+•	One profile
+•	Multiple conversations
+•	Multiple quizzes
+•	Multiple quiz results
+•	Multiple study plans
+________________________________________
+17. API Design
+The backend can expose REST endpoints.
+Authentication
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/logout
+AI Tutor
+POST /api/ai/chat
+POST /api/ai/explain
+POST /api/ai/summarize
+Quiz
+POST /api/quiz/generate
+POST /api/quiz/submit
+GET  /api/quiz/history
+Study Planner
+POST /api/study-plan/generate
+GET  /api/study-plan
+PUT  /api/study-plan/:id
+Progress
+GET /api/progress
+GET /api/recommendations
+________________________________________
+18. Gemini Integration Architecture
+The Gemini API should be accessed through the backend, rather than directly exposing the API key in the browser.
+             FRONTEND
+                 │
+                 │ HTTPS
+                 ▼
+          BACKEND SERVER
+                 │
+        ┌────────┴─────────┐
+        │                  │
+   Prompt Builder       Database
+        │
+        ▼
+    GEMINI API
+        │
+        ▼
+   AI Generated Result
+        │
+        ▼
+      Backend
+        │
+        ▼
+     Frontend
+Important design principle
+The Gemini API key should remain server-side and should never be hard-coded into frontend JavaScript.
+________________________________________
+19. User Interface Design
+Screen 1 – Login
+--------------------------------
+          EDU GENIE
+--------------------------------
+
+Email
+[________________________]
+
+Password
+[________________________]
+
+[ Login ]
+
+Don't have an account?
+[ Register ]
+--------------------------------
+________________________________________
+20. Dashboard Design
+------------------------------------------------
+ EDU GENIE                         Profile
+------------------------------------------------
+
+Welcome back, Student!
+
+┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+│ AI Tutor    │ │ Take Quiz   │ │ Study Plan  │
+│ Ask a doubt │ │ Practice    │ │ Plan study  │
+└─────────────┘ └─────────────┘ └─────────────┘
+
+Recent Progress
+──────────────────────────────────────────────
+Topics Studied: 12
+Quizzes: 8
+Average Score: 78%
+
+Recommended Revision
+• Recursion
+• Operating Systems
+------------------------------------------------
+________________________________________
+21. AI Tutor UI
+------------------------------------------------
+ EDU GENIE AI TUTOR
+------------------------------------------------
+
+Subject: Computer Science
+Level: Beginner
+
+You:
+Explain recursion with an example.
+
+EduGenie:
+Recursion is a technique where a function
+calls itself to solve a smaller version of
+the same problem.
+
+[ Continue ] [ Simpler ] [ More Detailed ]
+
+Ask a follow-up:
+[_________________________________________]
+
+                         [ Send ]
+------------------------------------------------
+________________________________________
+22. Quiz UI
+------------------------------------------------
+             QUIZ: DATA STRUCTURES
+------------------------------------------------
+
+Question 1 of 10
+
+Which data structure follows LIFO?
+
+○ Queue
+○ Stack
+○ Tree
+○ Graph
+
+[ Previous ]                 [ Next ]
+------------------------------------------------
+After submission:
+RESULT
+
+Score: 8 / 10
+
+Correct Answers: 8
+Incorrect Answers: 2
+
+Suggested Revision:
+✓ Stack operations
+✓ Queue basics
+⚠ Tree traversal
+
+[ Practice Again ]
+________________________________________
+23. Study Planner UI
+------------------------------------------------
+             MY STUDY PLAN
+------------------------------------------------
+
+Subject: Data Structures
+Exam: 15 November
+
+MON  Arrays              ✓
+TUE  Linked Lists        ✓
+WED  Stacks              ✓
+THU  Queues              ○
+FRI  Trees               ○
+SAT  Revision            ○
+SUN  Mock Test           ○
+
+[ Generate New Plan ]
+------------------------------------------------
+________________________________________
+24. Data Flow Design
+Level 0 – Context Diagram
+                  ┌─────────────────┐
+                  │     STUDENT     │
+                  └────────┬────────┘
+                           │
+                 Questions / Requests
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │    EDU GENIE    │
+                  └────────┬────────┘
+                           │
+                    AI Requests
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │  GOOGLE GEMINI  │
+                  └─────────────────┘
+________________________________________
+25. Level 1 Data Flow
+Student
+   │
+   ▼
+Authentication ───────► User Database
+   │
+   ▼
+Dashboard
+   │
+   ├────► AI Tutor ─────► Gemini
+   │                         │
+   │◄────────────────────────┘
+   │
+   ├────► Quiz Generator ───► Gemini
+   │              │
+   │              ▼
+   │         Quiz Database
+   │
+   ├────► Study Planner ────► Gemini
+   │              │
+   │              ▼
+   │        Study Plan DB
+   │
+   └────► Progress ─────────► Analytics
+________________________________________
+26. Security Design
+Security should be incorporated into the architecture rather than added later.
+Authentication
+•	Secure password hashing
+•	Session/token management
+•	Logout support
+Authorization
+Users should only access their own:
+•	Conversations
+•	Quiz results
+•	Study plans
+•	Profile information
+API Security
+•	Store Gemini credentials in server-side environment variables/secrets.
+•	Validate requests.
+•	Apply rate limiting where appropriate.
+•	Avoid exposing internal API errors.
+Data Security
+•	Encrypt sensitive data in transit.
+•	Use HTTPS.
+•	Apply database access controls.
+•	Minimize stored personal information.
+________________________________________
+27. Error Handling Design
+The system should handle failures gracefully.
+Gemini unavailable
+Student Request
+      ↓
+Gemini API
+      ↓
+Failure
+      ↓
+Backend Error Handler
+      ↓
+User-Friendly Message
+Example:
+"The AI service is temporarily unavailable. Please try again."
+Invalid input
+"Please enter a question before submitting."
+Network failure
+"Connection lost. Please check your internet connection and try again."
+________________________________________
+28. Personalization Architecture
+Personalization can be represented as:
+                STUDENT
+                   │
+       ┌───────────┼────────────┐
+       ▼           ▼            ▼
+   Profile     Quiz Results   History
+       │           │            │
+       └───────────┼────────────┘
+                   ▼
+           Learning Context
+                   │
+                   ▼
+             Prompt Builder
+                   │
+                   ▼
+              Gemini AI
+                   │
+                   ▼
+        Personalized Response
+This allows the same question to receive different explanations depending on relevant learner context.
+________________________________________
+29. Deployment Architecture
+A cloud-based deployment can be designed as:
+             INTERNET
+                 │
+                 ▼
+        ┌────────────────┐
+        │ Web Application │
+        │    Frontend     │
+        └───────┬────────┘
+                │
+                ▼
+        ┌────────────────┐
+        │ Backend Server │
+        └───────┬────────┘
+          ┌─────┴─────┐
+          ▼           ▼
+     Database      Gemini API
+Potential deployment technologies can include:
+•	Firebase Hosting
+•	Google Cloud
+•	Vercel
+•	AWS
+•	Other suitable cloud platforms
+The final choice depends on the project budget, requirements, and deployment environment.
+________________________________________
+30. Technology Stack
+A practical implementation could use:
+Component	Technology
+Frontend	React.js
+UI	HTML5, CSS3
+Backend	Node.js + Express
+AI	Google Gemini API
+Database	Firebase Firestore
+Authentication	Firebase Authentication
+API Communication	REST
+Hosting	Firebase / Google Cloud
+Version Control	Git + GitHub
+An alternative Python backend could use FastAPI instead of Node.js.
+________________________________________
+31. End-to-End Example
+Scenario
+A student wants to learn binary search.
+Step 1
+Student logs in.
+Step 2
+Student opens AI Tutor.
+Step 3
+Student enters:
+"Explain binary search for a beginner."
+Step 4
+Backend identifies:
+Subject = Computer Science
+Topic = Binary Search
+Level = Beginner
+Step 5
+Backend constructs the educational prompt.
+Step 6
+Prompt is sent to Gemini.
+Step 7
+Gemini generates an explanation.
+Step 8
+EduGenie displays:
+•	Definition
+•	Example
+•	Step-by-step explanation
+•	Complexity
+•	Practice question
+Step 9
+Student selects:
+Generate Quiz
+Step 10
+Gemini generates practice questions.
+Step 11
+Student completes the quiz.
+Step 12
+System calculates the result.
+Step 13
+Progress is saved.
+Step 14
+EduGenie recommends additional practice if appropriate.
+This creates the complete:
+Learn → Practice → Evaluate → Improve
+cycle.
+________________________________________
+32. Design Principles
+The EduGenie project should follow these principles:
+1. Student-centric
+The interface and workflows should focus on learner needs.
+2. AI-assisted, not AI-dependent
+Gemini should enhance the learning experience rather than replace educational judgment.
+3. Modular
+AI Tutor, Quiz, Planner, and Progress modules should remain independently maintainable.
+4. Secure by design
+Authentication, authorization, privacy, and API-key protection should be incorporated from the beginning.
+5. Explainable learning
+Where appropriate, responses should explain concepts and reasoning rather than simply output answers.
+6. Extensible
+The architecture should allow future features such as voice, image learning, teacher tools, and additional languages.
+________________________________________
+33. Final Project Design Summary
+                    EDU GENIE
+                        │
+                ┌───────┴────────┐
+                │  PRESENTATION  │
+                │                │
+                │ Dashboard      │
+                │ AI Tutor       │
+                │ Quiz           │
+                │ Study Planner  │
+                │ Progress       │
+                └───────┬────────┘
+                        │
+                        ▼
+                ┌───────────────┐
+                │    BACKEND    │
+                │               │
+                │ Auth          │
+                │ Business Logic│
+                │ Prompt Engine │
+                │ APIs          │
+                └───────┬───────┘
+                    ┌───┴───┐
+                    ▼       ▼
+              ┌─────────┐ ┌──────────┐
+              │DATABASE │ │  GEMINI  │
+              │         │ │   API    │
+              └─────────┘ └──────────┘
+Project Design Conclusion
+EduGenie is designed as a modular, three-tier, Gemini-powered learning platform. The frontend provides the student experience, the backend manages authentication, business logic, personalization and secure AI communication, while the database stores relevant learning information. Google Gemini provides the generative-AI capabilities needed for tutoring, explanations, summarization, quiz generation, and study planning.
+The design therefore provides a clear foundation for the next development stages: database implementation, UI prototyping, API development, Gemini integration, and testing.
+Continue the EduGenie design
+•	Design the EduGenie API specification
+•	Prepare EduGenie UML diagrams
+•	Create the EduGenie database schema
+
